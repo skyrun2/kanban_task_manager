@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import "tailwindcss";
+
+@theme{
+    --background-color-mainLight: #ffffff;    
+    --background-color-mainDark: #2B2C37;    
+    --background-color-bodyLight: #F4F7FD;    
+    --background-color-gradientLight: linearGradient(180deg,#DCE1E9,#F3F6FC);    
+    --background-color-add: #635fc7;    
+    --background-color-addHover: #A8A4FF;    
+    --background-color-moreHoverLight: #e4ebfa;    
+    --background-color-moreHoverDark: #20212C;        
+    --background-color-boardCardDark: #20212C;    
+    --background-color-boardCardLight: #e4ebfa;    
+    --border-color-lineLight : #E4EBFA;
+    --border-color-lineDark : #3E3F4E;
+    --color-light:#fff;  
+    --color-dark:#000;  
+    --color-grey: #828fa3;
+    --font-jakarta: "Plus Jakarta Sans", sans-serif;
+    --grid-template-rows-main: 1fr 7fr;
+    --padding-sideBarLeft : 2rem;
+    --width-left:18.75rem;
+    
+    
+}
+
+
+button{ 
+    cursor: pointer;
+}
+#circle {
+    transform: translateY(-50%) ;
+}
+/* e4ebf */
+/* #side_bar{
+    display: grid;
+    grid-template-rows: 1fr,7fr;
+} */
+
+/* border #C6CDD9 */
+/* purple #8471F2 */
+/* button purple #635FC7 */
+/* blue #49C4E5 */
+/* sub text 828fa3 */
