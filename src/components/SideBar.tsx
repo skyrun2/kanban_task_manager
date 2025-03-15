@@ -9,9 +9,9 @@ const SideBar = () =>{
     
     const boardsCount = 0;
     return(
-        <div className={`${classListExt("sideBar",theme)} pt-[1rem] w-left h-full border-r  flex flex-col text-grey `}>
+        <div className={`${classListExt("sideBar",theme)}  pt-[1rem] w-left h-full border-r shrink-0  flex flex-col text-grey `}>
             <h3  id="boards_counts" className=" pl-sideBarLeft pb-[1.5rem] text-[0.8rem] font-semibold tracking-wide">{"ALL BOARDS " + `(${boardsCount})`} </h3>
-            <div id="boards_list" className=" w-full h-[68%] grid-cols-1 gap-[.2rem] overflow-y-auto">
+            <div id="boards_list" className=" w-full h-[77%] grid-cols-1 gap-[.2rem] overflow-y-auto">
                 <div className=" pl-sideBarLeft hover:bg-addHover hover:text-light w-[92%] h-[3rem] rounded-r-[2rem]">
                     <button className=" w-full h-full flex items-center gap-[.5rem] font-bold">
                         <span className="w-[1rem] aspect-square">
@@ -46,7 +46,7 @@ const SideBar = () =>{
                     </button>                                        
                 </div>
             </div>
-            <div id="side_features" className=" pl-sideBarLeft w-full flex flex-row ">
+            <div id="side_features" className=" pl-sideBarLeft w-full flex flex-col ">
                 <div id="theme_control" className={` ${classListExt("theme",theme)} w-[13.5rem] h-[3rem] flex items-center justify-around rounded-[.5rem]`}>
                     <div className=" w-[1rem] aspect-square">
                         <img className=" w-[full] aspect-square" src={assetsData.dark} alt="" />
@@ -56,11 +56,18 @@ const SideBar = () =>{
                             <div id="circle" className={classListExt("themeBtn",theme)}></div>
                         </button>
                     </div>
-                    <div className=" w-[1rem] aspect-square">
-                        <img src={assetsData.light} alt="" />
+                    <div className=" w-[1.3rem] aspect-square">
+                        <img className=" w-[full] aspect-square" src={assetsData.light} alt="" />
                     </div>
                 </div>
-                <div id="hide"></div>
+                <div id="hide" className=" pl-[.5rem] pt-[1rem] w-[10rem] h-[2rem]">
+                    <button className="w-full h-full flex gap-[.5rem] items-center font-semibold">
+                        <span className="h-[1rem] aspect-square">
+                            <img className=" h-full aspect-square" src={assetsData.hide} alt="" />
+                        </span>
+                        <p>Hide sidebar</p>
+                    </button>
+                </div>
             </div>
         </div>
     )

@@ -20,7 +20,10 @@
     --font-jakarta: "Plus Jakarta Sans", sans-serif;
     --grid-template-rows-main: 1fr 7fr;
     --padding-sideBarLeft : 2rem;
+    --padding-boardLeft : 2rem;
     --width-left:18.75rem;
+    --width-column:18.75rem;
+    
     
     
 }
@@ -28,6 +31,7 @@
 
 button{ 
     cursor: pointer;
+    
 }
 #circle {
     transform: translateY(-50%) ;

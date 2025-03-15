@@ -1,10 +1,16 @@
-import { iElement, iTheme } from "../lib/types/store";
+import { iClassList, iTheme } from "../lib/types/store";
 
-function classListExt(element:iElement,theme:iTheme) {
-    const classList = {
+function classListExt(element:string,theme:iTheme) {
+    
+    const classList : iClassList = {
+        body  :  {
+            light:" bg-boardCardLight ",
+            dark:" bg-boardCardDark "
+        },        
         header  :  {
             light:" bg-mainLight border-b border-b-lineLight text-dark",
-            dark:" bg-mainDark border-b border-b-lineDark text-light "
+            dark:" bg-mainDark border-b border-b-lineDark text-light ",
+            
         },
         logo  :  {
             light:" border-r border-r-lineLight ",
@@ -17,6 +23,10 @@ function classListExt(element:iElement,theme:iTheme) {
         sideBar  :  {
             light:" bg-mainLight border-r border-r-lineLight",
             dark:" bg-mainDark border-r border-r-lineDark"
+        },
+        taskList  :  {
+            light:" bg-mainLight border border-lineLight text-dark",
+            dark:" bg-mainDark border border-lineDark text-light"
         },
         theme  :  {
             light:" bg-boardCardLight ",

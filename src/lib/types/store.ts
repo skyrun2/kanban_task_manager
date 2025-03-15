@@ -1,5 +1,5 @@
 export type iTheme = "light"|"dark";
-export type iElement = "header"|"logo"|"more"|"sideBar"|"theme"|"themeBtn";
+export type iClassList =  Record<string,{light:string,dark:string}>;
 
 
 export interface KanbanStore{

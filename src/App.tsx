@@ -11,7 +11,7 @@ function App() {
     <>
       <div
       id='side_bar'
-      className=' w-full h-[100vh] grid grid-rows-main  '>
+      className=' w-full h-[100vh] grid grid-rows-main  font-jakarta'>
         <Header/>
         <Body/>
         </div>
