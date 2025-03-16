@@ -10,7 +10,7 @@ const SideBar = () =>{
     const boardsCount = 0;
     return(
         <div className={`${classListExt("sideBar",theme)}  pt-[1rem] w-left h-full border-r shrink-0  flex flex-col text-grey `}>
-            <h3  id="boards_counts" className=" pl-sideBarLeft pb-[1.5rem] text-[0.8rem] font-semibold tracking-wide">{"ALL BOARDS " + `(${boardsCount})`} </h3>
+            <h3  id="boards_counts" className=" pl-sideBarLeft pb-[1.5rem] text-[0.75rem] font-bold tracking-[0.15rem]">{"ALL BOARDS " + `(${boardsCount})`} </h3>
             <div id="boards_list" className=" w-full h-[77%] grid-cols-1 gap-[.2rem] overflow-y-auto">
                 <div className=" pl-sideBarLeft hover:bg-addHover hover:text-light w-[92%] h-[3rem] rounded-r-[2rem]">
                     <button className=" w-full h-full flex items-center gap-[.5rem] font-bold">

@@ -23,6 +23,7 @@
     --padding-boardLeft : 2rem;
     --width-left:18.75rem;
     --width-column:18.75rem;
+    --letter-spacing-wid:0.15rem ;
     
     
     
@@ -31,6 +32,10 @@
 
 button{ 
     cursor: pointer;
+    
+}
+.scale{
+    transform: scale(.9);
     
 }
 #circle {

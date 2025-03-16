@@ -24,7 +24,7 @@ function classListExt(element:string,theme:iTheme) {
             light:" bg-mainLight border-r border-r-lineLight",
             dark:" bg-mainDark border-r border-r-lineDark"
         },
-        taskList  :  {
+        taskCard  :  {
             light:" bg-mainLight border border-lineLight text-dark",
             dark:" bg-mainDark border border-lineDark text-light"
         },
