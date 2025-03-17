@@ -10,8 +10,7 @@ function App() {
   return (
     <>
       <div
-      id='side_bar'
-      className=' w-full h-[100vh] grid grid-rows-main  font-jakarta'>
+      className=' w-full h-[100vh] flex flex-col  font-jakarta'>
         <Header/>
         <Body/>
         </div>

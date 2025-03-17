@@ -1,15 +1,14 @@
 import { iClassList, iTheme } from "../lib/types/store";
 
-function classListExt(element:string,theme:iTheme) {
-    
+function classListExt(element:string,theme:iTheme) {    
     const classList : iClassList = {
         body  :  {
             light:" bg-boardCardLight ",
             dark:" bg-boardCardDark "
         },        
         header  :  {
-            light:" bg-mainLight border-b border-b-lineLight text-dark",
-            dark:" bg-mainDark border-b border-b-lineDark text-light ",
+            light:"bg-mainLight border-b border-b-lineLight text-dark",
+            dark:"bg-mainDark border-b border-b-lineDark text-light ",
             
         },
         logo  :  {

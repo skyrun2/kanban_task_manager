@@ -4,6 +4,9 @@ import colorTheme from '../../utils/colorScheme';
 const darkTheme = colorTheme("dark");
 const defaultState : Omit<KanbanStore,'actions'> = {
     theme:"dark",    
+    rem : 16,
+    innerHeightRem : window.innerHeight/16,
+    headerHeight : 6 ,
     logo: darkTheme.logo,
 }
 export const useKanbanState = create<KanbanStore>()((set,get) =>({

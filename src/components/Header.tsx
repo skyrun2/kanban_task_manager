@@ -7,12 +7,15 @@ import classListExt from "../utils/classListExt";
 const Header = () =>{
     const logo = useKanbanState((state)=>state.logo);
     const theme = useKanbanState((state)=>state.theme);
+    const headerHeight = useKanbanState((state)=>state.headerHeight);
     
     
     console.log(theme);
     
     return(
-        <div id="header" className={`${classListExt("header",theme)}  w-full h-[100%]  flex items-center justify-between font-jakarta border-b `} >
+        <div id="header" className={`${classListExt("header",theme)}  w-full  shrink-0  flex items-center justify-between font-jakarta border-b `}
+            style={{height:`${headerHeight}rem`}}
+        >
             <div id="logo" className={` ${classListExt("logo",theme)} pl-[2rem] w-left h-full flex items-center border-r  cursor-pointer ` } >
                 <div className="w-[45%]">
                 <img src={logo} className="w-[100%]" alt="" />

@@ -6,8 +6,11 @@ import SideBar from "./SideBar";
 
 const Body  = () =>{
     const theme = useKanbanState((state)=>state.theme);
+    
+
+    
     return(
-        <div className={`${classListExt("body",theme)} w-full h-[100%]  flex items-center justify-between `}>
+        <div className={`${classListExt("body",theme)}  w-full  grow  flex  justify-between `} >
             <SideBar/>
             <BoardTasks/>
         </div>

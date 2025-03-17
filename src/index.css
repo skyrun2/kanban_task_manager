@@ -5,7 +5,7 @@
     --background-color-mainLight: #ffffff;    
     --background-color-mainDark: #2B2C37;    
     --background-color-bodyLight: #F4F7FD;    
-    --background-color-gradientLight: linearGradient(180deg,#DCE1E9,#F3F6FC);    
+    --background-image-gradientLight: linear-gradient(rgba(121, 132, 147, 0.2), rgba(130, 143, 163, 0.1), rgba(130, 143, 163, 0));
     --background-color-add: #635fc7;    
     --background-color-addHover: #A8A4FF;    
     --background-color-moreHoverLight: #e4ebfa;    
@@ -18,28 +18,41 @@
     --color-dark:#000;  
     --color-grey: #828fa3;
     --font-jakarta: "Plus Jakarta Sans", sans-serif;
-    --grid-template-rows-main: 1fr 7fr;
+    --grid-template-rows-main: 6.5rem 1fr;
     --padding-sideBarLeft : 2rem;
     --padding-boardLeft : 2rem;
     --width-left:18.75rem;
     --width-column:18.75rem;
     --letter-spacing-wid:0.15rem ;
-    
+    --box-shadow-taskCard:  rgba(54, 78, 126, 0.1)  0px 4px 6px;
+    --gap-card: 1.5rem
     
     
 }
 
-
+/* linear-gradient(rgba(121, 132, 147, 0.2), rgba(130, 143, 163, 0.1), rgba(130, 143, 163, 0)); */
 button{ 
     cursor: pointer;
+
     
 }
 .scale{
     transform: scale(.9);
     
 }
+.shadow{
+    box-shadow: rgba(54, 78, 126, 0.1)  0px 4px 6px;
+    
+}
 #circle {
     transform: translateY(-50%) ;
+}
+.create_column{
+    color: #828fa3;
+    
+}
+.create_column:hover{
+    color: #635fc7;
 }
 /* e4ebf */
 /* #side_bar{
