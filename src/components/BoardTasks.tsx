@@ -1,11 +1,9 @@
 import { useKanbanState } from "../lib/store/useKanbanStore";
-import classListExt from "../utils/classListExt";
 import Column from "./Column";
 import CreateColumn from "./CreateColumn";
 
 
 const BoardTasks  = () =>{
-    const theme = useKanbanState((state)=>state.theme);
     const headerHeight = useKanbanState((state)=>state.headerHeight);
     const innerHeightRem = useKanbanState((state)=>state.innerHeightRem);
     console.log(window.innerHeight);
@@ -14,8 +12,8 @@ const BoardTasks  = () =>{
         <div className=" pl-boardLeft pt-[2rem] w-[30rem] h-[60rem]  grow flex   gap-card overflow-auto"
         style={{height:`${innerHeightRem-headerHeight}rem`}}
         >
-            <Column/>
-            <CreateColumn/>            
+            {/* <Column/>
+            <CreateColumn/>             */}
         </div>
     )
 }
