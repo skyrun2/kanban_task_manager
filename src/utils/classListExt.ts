@@ -2,6 +2,10 @@ import { iClassList, iTheme } from "../lib/types/store";
 
 function classListExt(element:string,theme:iTheme) {    
     const classList : iClassList = {
+        priModal  :  {
+            light:" bg-mainLight text-dark",
+            dark:" bg-mainDark text-light"
+        },        
         body  :  {
             light:" bg-boardCardLight ",
             dark:" bg-boardCardDark "
@@ -10,6 +14,10 @@ function classListExt(element:string,theme:iTheme) {
             light:"bg-mainLight border-b border-b-lineLight text-dark",
             dark:"bg-mainDark border-b border-b-lineDark text-light ",
             
+        },
+        input  :  {
+            light:" border border-lineLight",
+            dark:" border border-lineDark "
         },
         logo  :  {
             light:" border-r border-r-lineLight ",

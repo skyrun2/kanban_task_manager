@@ -1,6 +1,7 @@
-import { IconHideSidebar } from "./icons";
+import { FC } from "react";
+import { IconHideSidebar } from "../Icons";
 
-const Hide = () =>{
+const Hide: FC = () =>{
     return(
         <div id="hide" className=" pl-[.5rem] pt-[1rem] w-[10rem] h-[2rem] hover:opacity-[75%]">
             <button className="w-full h-full flex gap-[.5rem] items-center font-semibold">
