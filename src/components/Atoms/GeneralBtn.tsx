@@ -1,22 +1,42 @@
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { AddTask } from "../Icons";
 import { GeneralBtnProps } from "../../lib/types/store";
 
-const GeneralBtn: FC<GeneralBtnProps> = ({text,add,width}) =>{
+const GeneralBtn: FC<GeneralBtnProps> = ({id,text,add,className,onClick}) =>{
+    const [isHover,setHover] = useState(false);
+    const handleMouseEnter = () =>{
+        setHover(true);
+    }
+    const handleMouseLeave = () =>{
+        setHover(false);
+    }
+        
+    // const btnStyle = {
+    //     backgroundColor: handleBackground(),
+    //     color,        
+    //     heght
+
+    // }
+    // function handleBackground(){
+    //     if(!hover) return backgroundColor;
+    //     return  isHover ? hover:backgroundColor;
+    // }
     return(
-        <div id=" add_btn_ctrl" style={{width:`${width}`}}>
-            <button id="add_btn" className="
-            py-[.7rem] px-[1rem] w-full font-semibold text-[.94rem]
-            flex items-center justify-center gap-[.15rem]
-            bg-add hover:bg-addHover text-light rounded-[2rem]">
+        <div id={` ${id}_ctrl`} className={className}>
+            <button id={id} className="
+            py-[.7rem] px-[1rem] w-full h-full 
+            flex items-center justify-center gap-[.15rem]"
+            //   style={btnStyle}
+              onClick={onClick}
+              >
                 {add?
                     <span className="w-[.5rem] aspect-square shrink-0">
                         <AddTask/>
                     </span>
                     : null    
                 }                
-                <span>{text}</span>
+                <p >{text}</p>
             </button>
         </div>
     )

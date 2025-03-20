@@ -8,7 +8,7 @@
     --background-image-gradientLight: linear-gradient(rgba(121, 132, 147, 0.2), rgba(130, 143, 163, 0.1), rgba(130, 143, 163, 0));
     --background-color-add: #635fc7;    
     --background-color-addHover: #A8A4FF;    
-    --background-color-moreHoverLight: #e4ebfa;    
+    --background-color-moreHoverLight: #e4ebfa;
     --background-color-moreHoverDark: #20212C;        
     --background-color-boardCardDark: #20212C;    
     --background-color-boardCardLight: #e4ebfa;    
@@ -18,6 +18,8 @@
     --color-light:#fff;  
     --color-dark:#000;  
     --color-grey: #828fa3;
+    --color-red: #EA5555;
+    --color-purple:#635fc7;
     --font-jakarta: "Plus Jakarta Sans", sans-serif;
     --grid-template-rows-main: 6.5rem 1fr;
     --padding-sideBarLeft : 2rem;
@@ -26,6 +28,7 @@
     --width-column:18.75rem;
     --letter-spacing-wid:0.15rem ;
     --box-shadow-taskCard:  rgba(54, 78, 126, 0.1)  0px 4px 6px;
+    --box-shadow-moreDropDown:  rgba(54, 78, 126, 0.1) 0px 0px 8px;
     --gap-card: 1.5rem
     
     
@@ -37,6 +40,13 @@ button{
 
     
 }
+input,textarea{
+    outline: none;
+    && :hover{
+        outline: none;
+    }
+}
+
 .scale{
     transform: scale(.9);
     
@@ -45,6 +55,7 @@ button{
     box-shadow: rgba(54, 78, 126, 0.1)  0px 4px 6px;
     
 }
+
 #circle {
     transform: translateY(-50%) ;
 }

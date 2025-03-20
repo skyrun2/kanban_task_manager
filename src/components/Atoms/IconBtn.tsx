@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import { InputBtnProps, iTheme } from "../../lib/types/store";
 
-const IconBtn : FC<InputBtnProps> = ({Icon,iconWidth,hover,btnWidth}) =>{
+const IconBtn : FC<IconBtnProps> = ({Icon,iconWidth,hover,btnWidth}) =>{
     const theme = useKanbanState((state)=>state.theme);
     const [isHover,setHover] = useState(false);
     const handleMouseEnter = () =>{

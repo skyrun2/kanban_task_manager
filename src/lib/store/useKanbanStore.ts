@@ -8,6 +8,8 @@ const defaultState : Omit<KanbanStore,'actions'> = {
     innerHeightRem : window.innerHeight/16,
     headerHeight : 6 ,
     logo: darkTheme.logo,
+    Modal:undefined,
+    isModalOpen:false,
 }
 export const useKanbanState = create<KanbanStore>()((set,get) =>({
     ...defaultState,
@@ -18,6 +20,17 @@ export const useKanbanState = create<KanbanStore>()((set,get) =>({
                 theme,                
                 logo: newTheme.logo,
             })
-        }
+        },
+        setModalClose() {
+            set({
+                isModalOpen:false,
+            })
+        },
+        setModalOpen(Modal) {
+            set({
+                Modal:Modal,
+                isModalOpen:true,
+            })
+        },
     }
 })) 

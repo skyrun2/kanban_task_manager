@@ -37,9 +37,10 @@ function BoardTasks(){
         <div className=" pl-boardLeft pt-[2rem] w-[30rem]   grow flex   gap-card overflow-auto"
         style={{height:`${innerHeightRem-headerHeight}rem`}}
         >
-            <Column/>
-            <CreateColumn/>            
-            {/* <NoColumn/> */}
+            {/* <Column/>
+            <EmptyColumn/>
+            <CreateColumn/>           */}
+            <NoColumn/>
         </div>
     )
 }
@@ -58,13 +59,28 @@ function Column(){
         </div>
     )
 }
+
+function EmptyColumn(){
+    return(
+        <div className=" pb-[1.5rem] shrink-0 w-column  flex flex-col" >
+                <div id="column_name"  className="pb-[1rem] shrink-0 flex items-center gap-[.2rem] text-grey font-bold text-[.75rem] tracking-[0.15rem]">
+                    <span className="h-[1rem] aspect-square bg-add rounded-[100%] "></span>
+                    <p>TODO (0)</p>
+                </div>
+                <div className=" width-full h-[90%] border-dashed border-2 border-lineDark grow grid grid-flow-row gap-[1.5rem] rounded-[.5rem]">
+                    
+                </div>
+        </div>
+    )
+}
+
 function NoColumn(){
     return(
         <div className="w-full h-full flex  flex-col items-center justify-center gap-[1.8rem] text-grey font-bold"
         // style={{height:`${innerHeightRem-headerHeight}rem`}}
          >
             <p>This board is empty. Create new column to get started</p>
-            <GeneralBtn text="Add New Column" add={true} width="fit"/>
+            <GeneralBtn text="Add New Column" add={true} className={`  bg-add hover:bg-addHover text-light text-[0.8rem] font-bold rounded-[2rem]`}/>
         </div>
     )
 }
@@ -97,7 +113,7 @@ function CreateColumn(){
 function BoardList() {
     return (
         <div id="boards_list" className=" w-full h-[77%] grid-cols-1 gap-[.2rem] overflow-y-auto">            
-            <Board/>
+            {/* <Board/> */}
             <CreateNewBoard/>
         </div>
     )

@@ -10,6 +10,10 @@ function classListExt(element:string,theme:iTheme) {
             light:" bg-boardCardLight ",
             dark:" bg-boardCardDark "
         },        
+        select  :  {
+            light:" bg-boardCardLight text-dark",
+            dark:" bg-boardCardDark text-light "
+        },        
         header  :  {
             light:"bg-mainLight border-b border-b-lineLight text-dark",
             dark:"bg-mainDark border-b border-b-lineDark text-light ",
