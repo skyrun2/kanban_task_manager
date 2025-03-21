@@ -1,27 +1,10 @@
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import { AddTask } from "../Icons";
 import { GeneralBtnProps } from "../../lib/types/store";
 
 const GeneralBtn: FC<GeneralBtnProps> = ({id,text,add,className,onClick}) =>{
-    const [isHover,setHover] = useState(false);
-    const handleMouseEnter = () =>{
-        setHover(true);
-    }
-    const handleMouseLeave = () =>{
-        setHover(false);
-    }
-        
-    // const btnStyle = {
-    //     backgroundColor: handleBackground(),
-    //     color,        
-    //     heght
-
-    // }
-    // function handleBackground(){
-    //     if(!hover) return backgroundColor;
-    //     return  isHover ? hover:backgroundColor;
-    // }
+    
     return(
         <div id={` ${id}_ctrl`} className={className}>
             <button id={id} className="

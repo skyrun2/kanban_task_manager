@@ -1,5 +1,5 @@
 
-import { FC, ReactElement, useCallback, useState } from "react";
+import { FC } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 
 import classListExt from "../../utils/classListExt";
@@ -8,24 +8,28 @@ import GeneralBtn from "../Atoms/GeneralBtn";
 
 import IconBtn from "../Atoms/IconBtn";
 import AddTaskModal from "./AddTaskModal";
+import { iClick } from "../../lib/types/store";
 
 
 
 const Header: FC = () =>{
 
     const setModalOpen = useKanbanState((state)=>state.actions.setModalOpen);
+    const setMiniModalOpen = useKanbanState((state)=>state.actions.setMiniModalOpen);
     const theme = useKanbanState((state)=>state.theme);
     const headerHeight = useKanbanState((state)=>state.headerHeight);
-    
-    const handleOnClick = (e:React.MouseEvent<HTMLButtonElement>)=>{
+    const miniModal = useKanbanState((state)=>state.miniModal);
+
+    const handleOnClick = (e:iClick)=>{
         const id : string =  e.currentTarget.id;
         switch (true) {
             case id == "add_task":
                 setModalOpen(AddTaskModal);
-                console.log(id);
                 
                 break;
-        
+            case id == "more_btn":
+                setMiniModalOpen("more");
+                break;
             default:
                 break;
         }
@@ -53,8 +57,10 @@ const Header: FC = () =>{
                     <GeneralBtn id="add_task" text={"Add new task"} add={true}
                     onClick={handleOnClick}
                     className={` w-fit bg-add hover:bg-addHover text-light text-[0.94rem] font-bold rounded-[2rem]`}  />
-                    <IconBtn btnWidth="1.2rem" iconWidth="100%" Icon={More} hover= {{light:"#e4ebfa",dark:"#20212C"}}/>
-                    {/* <DropDownSelect/> */}
+                    <IconBtn id="more_btn" widthOrClass={{btnWidth:"1.2rem"}} iconWidth="100%" Icon={<More/>}  
+                    onClick={handleOnClick}
+                    hover= {{light:"#e4ebfa",dark:"#20212C"}}/>
+                    {miniModal == "more"?<DropDownSelect/>:null}
                 </div> 
             </div>
         </div>

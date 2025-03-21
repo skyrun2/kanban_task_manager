@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
-import { InputBtnProps, iTheme } from "../../lib/types/store";
+import { IconBtnProps, iTheme } from "../../lib/types/store";
 
-const IconBtn : FC<IconBtnProps> = ({Icon,iconWidth,hover,btnWidth}) =>{
+const IconBtn : FC<IconBtnProps> = ({id,Icon,iconWidth,hover,widthOrClass,onClick}) =>{
     const theme = useKanbanState((state)=>state.theme);
     const [isHover,setHover] = useState(false);
     const handleMouseEnter = () =>{
@@ -13,25 +13,27 @@ const IconBtn : FC<IconBtnProps> = ({Icon,iconWidth,hover,btnWidth}) =>{
     }
     const iconStyle = {        
         width:`${iconWidth}`,
-        backgroundColor: isHover? themeStyle(hover,theme) : "transparent",
+        backgroundColor: isHover && hover? themeStyle(hover,theme) : "transparent",
     }   
     function themeStyle(styleObj:{light:string,dark:string},theme:iTheme){
         if(!hover) return "transparent"
         if(theme == "light") return styleObj.light;
         else if(theme == "dark") return styleObj.dark;
     }
-
+    let className = `rounded-[1rem] flex items-center justify-center overflow-hidden`
+    if(widthOrClass.className) className += widthOrClass.className
     
     return(        
-        <button id="more_btn" className={`rounded-[1rem] flex items-center justify-center overflow-hidden`  }
-            style={{width:`${btnWidth}`}}
+        <button id={id} className={className }
+            style={widthOrClass.btnWidth?{width:`${widthOrClass.btnWidth}`}:{}}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onClick={onClick}
         >
             <div className=" h-full flex items-center justify-center"
                 style={iconStyle}
             >
-                <Icon/>
+                {Icon}
             </div>
         </button>        
     )

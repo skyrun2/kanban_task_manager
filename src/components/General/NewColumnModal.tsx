@@ -19,13 +19,13 @@ const  NewColumnModal : FC  = () => {
             <div className="w-full flex flex-col gap-[.7rem]">
                 <p>Columns</p>
                 <div className=" w-full flex flex-col gap-[.7rem] ">
-                    <Field Input={<FieldInput width="24rem" />} Icon={<IconBtn btnWidth="1rem" iconWidth="full" Icon={IconCross} />}/>
+                    <Field Input={<FieldInput width="24rem" />} Icon={<IconBtn id="" widthOrClass={{btnWidth:"1rem"}} iconWidth="full" Icon={<IconCross/>} />}/>
                     
                     
                 </div>
             </div>            
-            <GeneralBtn text="Add New Subtask" add={true} className={` w-full h-[2.5rem] bg-bodyLight text-purple text-[0.8rem] font-bold rounded-[2rem]`} />  
-            <GeneralBtn text="Save Changes"  className={` w-full h-[2.5rem] bg-add hover:bg-addHover text-light  text-[0.8rem] font-bold rounded-[2rem]`} />  
+            <GeneralBtn id="" text="Add New Subtask" add={true} className={` w-full h-[2.5rem] bg-bodyLight text-purple text-[0.8rem] font-bold rounded-[2rem]`} />  
+            <GeneralBtn id="" text="Save Changes"  className={` w-full h-[2.5rem] bg-add hover:bg-addHover text-light  text-[0.8rem] font-bold rounded-[2rem]`} />  
             
         </div>
     )

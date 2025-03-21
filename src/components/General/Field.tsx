@@ -15,20 +15,25 @@ const Field : FC<FieldProps> = ({text,Input,Icon}) =>{
                     <Subtask Input={Input} Icon={Icon} />                                                                                
                 </div>
             :
-                <div className="w-full">
+                <div className=" relative w-full">
                     {Input}
+                    
                 </div>                
             }
             
         </label>
     )
 }
-    const Subtask: FC<{Input:ReactElement,Icon:ReactElement}> = ({Icon,Input}) =>{
-        return(
-            <div className="w-full flex justify-between">
-                    {Input}
-                    {Icon}
-            </div>
-        )
-    }
+const Subtask: FC<{Input:ReactElement,Icon:ReactElement}> = ({Icon,Input}) =>{
+    return(
+        <div className="w-full flex justify-between">
+                {Input}
+                {Icon && Icon}
+        </div>
+    )
+}
+
+
+
+
 export default Field;

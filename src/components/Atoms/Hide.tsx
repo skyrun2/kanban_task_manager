@@ -1,10 +1,13 @@
 import { FC } from "react";
 import { IconHideSidebar } from "../Icons";
+import { iClick } from "../../lib/types/store";
 
-const Hide: FC = () =>{
+const Hide: FC<{onClick?:(e:iClick)=>void}> = ({onClick}) =>{
     return(
-        <div id="hide" className=" pl-[.5rem] pt-[1rem] w-[10rem] h-[2rem] hover:opacity-[75%]">
-            <button className="w-full h-full flex gap-[.5rem] items-center font-semibold">
+        <div  className=" pl-[.5rem] pt-[1rem] w-[10rem] h-[2rem] hover:opacity-[75%]">
+            <button id="hide" className="w-full h-full flex gap-[.5rem] items-center font-semibold"
+            onClick={onClick}
+            >
                 <span className="h-[1rem] aspect-square">
                     <IconHideSidebar/>
                 </span>

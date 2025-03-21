@@ -2,15 +2,17 @@ import { FC } from "react";
 import { OverlayProps } from "../../lib/types/store";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 
-const Overlay : FC<OverlayProps> = ({Modal})=>{
+const Overlay : FC = ()=>{
     const setModalClose = useKanbanState((state)=>state.actions.setModalClose);
-
+    const isModalOpen = useKanbanState((state)=>state.isModalOpen);
+    const Modal = useKanbanState((state)=>state.Modal);
 
     const handleOnClick = (e:React.MouseEvent<HTMLDivElement>) =>{
         const eTarget = e.target as HTMLDivElement;
         const id = eTarget.id;
         // setModalClose()
-        if ( id == "overlay"){
+        
+        if ( isModalOpen && id == "overlay"){
             setModalClose()
         }
         
@@ -21,7 +23,7 @@ const Overlay : FC<OverlayProps> = ({Modal})=>{
             id="overlay"
             onClick={handleOnClick}
             >
-                <Modal/>
+                {Modal? <Modal/> : null}
             </div>
         </div>
     )
