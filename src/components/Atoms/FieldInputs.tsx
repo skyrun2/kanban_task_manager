@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { InputProps } from "../../lib/types/store";
 
-const FieldInput : FC<InputProps> = ({id,width,value,disabled,required}) =>{
+const FieldInput : FC<InputProps> = ({id,width,value,disabled,required,onChange,onClick}) =>{
     const style = {
         opacity: disabled? "30%" : "",
         width
@@ -11,6 +11,8 @@ const FieldInput : FC<InputProps> = ({id,width,value,disabled,required}) =>{
             <input id={id} className={` px-[1rem] py-[.5rem] w-full h-[2.2rem] shrink-0 font-medium border-2 border-input focus:border-purple rounded-[.2rem]`} type="text" style={style}
                 defaultValue={value? value:""}
                 disabled ={disabled?true:false}
+                onChange={onChange}
+                onClick={onClick}
 
             />            
             {required?<Required/>:null}

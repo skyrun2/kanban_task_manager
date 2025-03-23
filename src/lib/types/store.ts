@@ -3,6 +3,7 @@ import { FC, ReactElement } from "react";
 export type iTheme = "light"|"dark";
 export type iClassList =  Record<string,{light:string,dark:string}>;
 export type iClick = React.MouseEvent<HTMLElement> ;
+export type iChange = React.ChangeEvent<HTMLInputElement> ;
 export type iMiniModal = "more"|"task"|undefined;
 
 export interface iSubtasks{
@@ -44,6 +45,8 @@ export interface InputProps{
     value?:string;
     disabled?:boolean;
     required?:boolean;    
+    onClick?:(e:iClick)=>void;    
+    onChange?:(e:iChange)=>void;    
 }
 type widthOrClass = {
     btnWidth:string;
