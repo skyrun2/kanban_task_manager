@@ -5,29 +5,47 @@ import classListExt from "../../utils/classListExt";
 import { AddTask, DarkTheme, IconBoard, LightTheme, Show } from "../Icons";
 import Hide from "../Atoms/Hide";
 import GeneralBtn from "../Atoms/GeneralBtn";
-import { CreateNewBoardProps, iClick } from "../../lib/types/store";
+import { CreateNewBoardProps, iBoard, iClick, iColumn, iTask } from "../../lib/types/store";
 import NewBoardModal from "./NewBoardModal";
 import NewColumnModal from "./NewColumnModal";
 import IconBtn from "../Atoms/IconBtn";
 
 
+ interface ColumnProps {
+    className?:string;
+    column: iColumn;
+ }
+ interface TaskCardProps {
+    
+    task: iTask;
+ }
+ interface DisplayBoardsProps{
+    boards: iBoard[];
+    onclick?:(e:iClick)=>void;
+ }
+ interface DisplayColumnsProps{
+    currentBoard:iBoard;
+    onclick?:(e:iClick)=>void;
+ }
  
 const Body :FC  = () =>{
+    const boards = useKanbanState((state)=>state.boards);
+    const currentBoard = useKanbanState((state)=>state.currentBoard);
     const setModalOpen = useKanbanState((state)=>state.actions.setModalOpen);
     const setSideBarOpen = useKanbanState((state)=>state.actions.setSideBarOpen);
     const setSideBarClose = useKanbanState((state)=>state.actions.setSideBarClose);
     // const setMiniModalOpen = useKanbanState((state)=>state.actions.setMiniModalOpen);
     const setTheme = useKanbanState((state)=>state.actions.setTheme);
     const theme = useKanbanState((state)=>state.theme);
-    // const miniModal = useKanbanState((state)=>state.miniModal);
-    const headerHeight = useKanbanState((state)=>state.headerHeight);
-    const innerHeightRem = useKanbanState((state)=>state.innerHeightRem);
+    // const miniModal = useKanbanState((state)=>state.miniModal);    
     const isSideBarOpen = useKanbanState((state)=>state.isSideBarOpen);
     const className = " absolute  bottom-[5%] w-[3rem] h-[3.2rem] bg-add hover:bg-addHover rounded-l-[0rem] rounded-r-[2rem]"
     const handleOnclick = (e:iClick) =>{
         const id = e.currentTarget.id;
         switch (true) {
             case id == "create_new_board" || id == "new_board":
+                console.log('1');
+                
                 setModalOpen(NewBoardModal);
                 break;            
             case id == "new_column":
@@ -51,11 +69,12 @@ const Body :FC  = () =>{
         <div className={`${classListExt("body",theme)} relative w-full  grow  flex  justify-between `} >
             {isSideBarOpen? 
                 <div className={`${classListExt("sideBar",theme)}  pt-[1rem] w-left h-full border-r shrink-0  flex flex-col text-grey `}>
-                    <h3  id="boards_counts" className=" pl-sideBarLeft pb-[1.5rem] text-[0.75rem] font-bold tracking-[0.15rem]">{"ALL BOARDS " + `(${0})`} </h3>
-                    <div id="boards_list" className=" w-full h-[77%] grid-cols-1 gap-[.2rem] overflow-y-auto">            
-                        {/* <Board/> */}
+                    <h3  id="boards_counts" className=" pl-sideBarLeft pb-[1.5rem] text-[0.75rem] font-bold tracking-[0.15rem]">{"ALL BOARDS " + `(${boards.length})`} </h3>
+                    {boards.length? 
+                        <DisplayBoards boards={boards} onclick={handleOnclick}/>                                                    
+                    :                                            
                         <CreateNewBoard onClick={handleOnclick}/>
-                    </div>
+                    }
                     <div id="side_features" className=" pl-sideBarLeft w-full flex flex-col ">            
                         <div id="theme_control" className={` ${classListExt("theme",theme)} w-[13.5rem] h-[3rem] flex items-center justify-around rounded-[.5rem]`}>
                             <div className=" w-[1rem] aspect-square">
@@ -77,51 +96,103 @@ const Body :FC  = () =>{
                 </div>
             :   <IconBtn id="show" onClick={handleOnclick} widthOrClass={{className}} iconWidth="full" Icon={<Show className="w-[1.1rem] aspect-square" />}/>
             }
-            <div className=" pl-boardLeft pt-[2rem] w-[30rem]   grow flex   gap-card overflow-auto"
-        style={{height:`${innerHeightRem-headerHeight}rem`}}
-        >
-            {/* <Column/>
-            <EmptyColumn/>
-            <CreateColumn/> */}
-            {/* <NoColumn onClick={handleOnclick} /> */}
-            <NoBoard onClick={handleOnclick} />
-        </div>
+            {
+                boards.length ? 
+                    <DisplayColumns currentBoard={currentBoard}/>
+                :
+                <NoBoard onClick={handleOnclick} />
+            }
         </div>
     )
 }
 export default Body;
 
 
+const  DisplayColumns: FC<DisplayColumnsProps> =({currentBoard,onclick}) => {
 
 
-function Column(){
+    const  Column:FC<ColumnProps>  = ({className,column})=>{
+        return(
+            <div className={`  pb-[1.5rem] shrink-0 w-column flex flex-col`} >
+                    <div id="column_name"  className="pb-[1rem] shrink-0 flex items-center gap-[.2rem] text-grey font-bold text-[.75rem] tracking-[0.15rem]">
+                        <span className="h-[1rem] aspect-square bg-add rounded-[100%] "></span>
+                        <p>{column.name.toUpperCase()} ({column.tasks.length})</p>
+                    </div>
+                    <div className={` ${className} width-full h-[90%] grow grid grid-flow-row gap-[1.5rem] rounded-[.5rem]`}>
+                        {
+                            column.tasks.map((e,i)=>{
+                                return(
+                                    <TaskCard key={i} task={e}/>           
+                                )
+                            })
+                        }
+                        
+                    </div>
+            </div>
+        )
+    }
+    const  TaskCard: FC<TaskCardProps> = ({task})  => {
+        const theme = useKanbanState((state)=>state.theme);
+        return (
+            
+            <div id={task.title} className={` ${classListExt("taskCard",theme)} relative  h-[6.25rem] shrink-0 flex flex-col justify-center items-start rounded-[.5rem] hover:opacity-[75%] shadow overflow-hidden`}>
+                <p className="pl-[1rem] h-fit w-fit font-bold">{task.title}</p>
+                <p className="pl-[1rem] h-fit w-fit  text-grey text-[.75rem] font-bold "> 0 out of {task.subTasks.length} subtask</p>            
+            </div>
+            
+        )   
+    }
+    const innerHeightRem = useKanbanState((state)=>state.innerHeightRem);
+    const headerHeight = useKanbanState((state)=>state.headerHeight);
     return(
-        <div className=" pb-[1.5rem] shrink-0 w-column flex flex-col" >
-                <div id="column_name"  className="pb-[1rem] shrink-0 flex items-center gap-[.2rem] text-grey font-bold text-[.75rem] tracking-[0.15rem]">
-                    <span className="h-[1rem] aspect-square bg-add rounded-[100%] "></span>
-                    <p>TODO (0)</p>
-                </div>
-                <div className=" width-full h-[90%] grow grid grid-flow-row gap-[1.5rem] ">
-                    <TaskCard/>
+        <div className=" pl-boardLeft pt-[2rem] w-[30rem]   grow flex   gap-card overflow-auto"
+        style={{height:`${innerHeightRem-headerHeight}rem`}}
+        >
+            {
+                currentBoard.columns.map((e,i)=>{
                     
-                </div>
+                    const className =  e.tasks.length? "" :  "border-dashed border-2 border-lineDark";
+                    return(
+                        <Column key={i} className = {className}  column={e} />
+                    )
+                })
+            
+            } 
+            <CreateColumn/>
         </div>
     )
 }
 
-function EmptyColumn(){
+
+const  DisplayBoards: FC<DisplayBoardsProps> =  ({boards,onclick}) =>{
+    const Board: FC<{name:string}> =({name})=> {
+        return (
+            <div className=" pl-sideBarLeft hover:bg-addHover hover:text-light w-[92%] h-[3rem] rounded-r-[2rem]">
+                <button id={name} className=" w-full h-full flex items-center gap-[.5rem] font-bold text-[1rem]">
+                    <span className="w-[1rem] aspect-square">
+                        <IconBoard className="text-grey"/>
+                    </span>
+                    <p>{name}</p>
+                </button>                                        
+            </div>
+        )
+    }
     return(
-        <div className=" pb-[1.5rem] shrink-0 w-column  flex flex-col" >
-                <div id="column_name"  className="pb-[1rem] shrink-0 flex items-center gap-[.2rem] text-grey font-bold text-[.75rem] tracking-[0.15rem]">
-                    <span className="h-[1rem] aspect-square bg-add rounded-[100%] "></span>
-                    <p>TODO (0)</p>
-                </div>
-                <div className=" width-full h-[90%] border-dashed border-2 border-lineDark grow grid grid-flow-row gap-[1.5rem] rounded-[.5rem]">
+        <div id="boards_list" className=" w-full h-[77%] grid-cols-1 gap-[.2rem] overflow-y-auto">            
+            {boards.map((e,i)=>{
+                
+                return(
+                    <Board key={i} name={e.name} /> 
+                        
                     
-                </div>
+                )
+            })}
+            <CreateNewBoard onClick={onclick}/>
         </div>
     )
 }
+
+
 
 const NoColumn : FC<CreateNewBoardProps> = ({onClick}) =>{
     return(
@@ -143,21 +214,11 @@ const NoBoard : FC<CreateNewBoardProps> = ({onClick}) =>{
         </div>
     )
 }
-function TaskCard(){
-    const theme = useKanbanState((state)=>state.theme);
-    return (
-        
-        <div id="task_card" className={` ${classListExt("taskCard",theme)} relative  h-[6.25rem] shrink-0 flex flex-col justify-center items-start rounded-[.5rem] hover:opacity-[75%] shadow overflow-hidden`}>
-            <p className="pl-[1rem] h-fit w-fit font-bold">Task name</p>
-            <p className="pl-[1rem] h-fit w-fit  text-grey text-[.75rem] font-bold "> 0 out of 0 subtask</p>            
-        </div>
-        
-    )   
-}
+
 function CreateColumn(){
     return(
         <div className=" pt-[2rem] w-column "> 
-            <button className="create_column w-full h-[90%] bg-gradientLight flex items-center justify-center  rounded-[0.5rem]">
+            <button className="create_column w-full h-[95%] bg-gradientLight flex items-center justify-center  rounded-[0.5rem]">
                 <div className="  h-[2rem] flex items-baseline justify-center  gap-[0.2rem] text-[1.5rem] font-bold ">
                     <div className="w-[.7rem] aspect-square flex justify-baseline items-end ">
                         <AddTask/>
@@ -171,18 +232,7 @@ function CreateColumn(){
 
 
 
-function Board() {
-    return (
-        <div className=" pl-sideBarLeft hover:bg-addHover hover:text-light w-[92%] h-[3rem] rounded-r-[2rem]">
-            <button className=" w-full h-full flex items-center gap-[.5rem] font-bold text-[1rem]">
-                <span className="w-[1rem] aspect-square">
-                    <IconBoard className="text-grey"/>
-                </span>
-                <p>BoardName</p>
-            </button>                                        
-        </div>
-    )
-}
+
 
 const  CreateNewBoard : FC<CreateNewBoardProps> = ({onClick}) => {
     return(

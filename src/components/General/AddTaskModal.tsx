@@ -20,10 +20,10 @@ const  AddTaskModal : FC = () =>{
                 <h1 className="text-[1.125rem]">Add New Tasks</h1>
                 <Field text="Title" Input={<FieldInput/>} />
                 <Field text="Description" Input={<FieldTextarea/>}/>
-                <Field text="Subtask" Input={<FieldInput width="24rem"/>} Icon={<IconBtn btnWidth="1rem" iconWidth="full" Icon={IconCross} />}/>                                
-                <GeneralBtn text="Add New Subtask" add={true} className={` w-full h-[2.5rem] bg-bodyLight text-purple text-[0.8rem] font-bold rounded-[2rem]`} />                                                
+                <Field text="Subtask" Input={<FieldInput width="24rem"/>} Icon={<IconBtn id="" widthOrClass={{btnWidth:"1rem"}} iconWidth="full" Icon={<IconCross/>} />}/> 
+                <GeneralBtn id="at_add_subtask" text="Add New Subtask" add={true} className={` w-full h-[2.5rem] bg-bodyLight text-purple text-[0.8rem] font-bold rounded-[2rem]`} />                                                
                 <DropDown text="Status" className={` relative w-full flex flex-col gap-[.7rem]`}/>                
-                <GeneralBtn text="Create Task" className={` w-full h-[2.5rem] bg-add hover:bg-addHover text-light text-[0.8rem] font-bold rounded-[2rem]`} />
+                <GeneralBtn id="at_create_task" text="Create Task" className={` w-full h-[2.5rem] bg-add hover:bg-addHover text-light text-[0.8rem] font-bold rounded-[2rem]`} />
         </div>
     )
 }

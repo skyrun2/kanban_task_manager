@@ -1,5 +1,5 @@
 import {create} from  'zustand';
-import {iTheme, KanbanStore} from '../types/store' 
+import {iBoard, iTheme, KanbanStore} from '../types/store' 
 import colorTheme from '../../utils/colorScheme';
 const darkTheme = colorTheme("dark");
 const defaultState : Omit<KanbanStore,'actions'> = {
@@ -13,10 +13,25 @@ const defaultState : Omit<KanbanStore,'actions'> = {
     isModalOpen:false,
     isMiniModalOpen:false,
     isSideBarOpen:true,
+    boards:[],
+    currentBoard:{name:"",columns:[]}
 }
 export const useKanbanState = create<KanbanStore>()((set,get) =>({
     ...defaultState,
     actions:{
+        setBoard(board) {
+            const updatedBoards : iBoard[] = [...get().boards,board];
+            
+            set({
+                boards:updatedBoards
+            })
+            
+        },
+        setCurrentBoard(currentBoard) {
+            set({
+                currentBoard
+            })
+        },
         setTheme: () =>{            
             const newTheme : iTheme = get().theme == "dark" ? "light" : "dark" ;
             set({

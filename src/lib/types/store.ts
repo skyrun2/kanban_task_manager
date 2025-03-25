@@ -68,10 +68,10 @@ export interface IconBtnProps{
     
 }
 export interface CreateNewBoardProps{    
-    onClick: (e:iClick)=>void;
+    onClick?: (e:iClick)=>void;
 }
 export interface NewColumnProps{    
-    onClick: (e:iClick)=>void;
+    onClick?: (e:iClick)=>void;
 }
 export interface DropDownProps{
     text:string;
@@ -89,7 +89,11 @@ export interface KanbanStore{
     isModalOpen:boolean;    
     isMiniModalOpen:boolean;
     isSideBarOpen:boolean;
+    currentBoard:iBoard;
+    boards:iBoard[];
     actions:{
+        setBoard: (board:iBoard)=>void;
+        setCurrentBoard: (currentBoard: iBoard)=>void;
         setTheme:()=> void;
         setModalOpen:(Modal:FC)=>void;
         setModalClose:()=>void;
