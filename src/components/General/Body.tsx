@@ -23,6 +23,10 @@ import IconBtn from "../Atoms/IconBtn";
     boards: iBoard[];
     onclick?:(e:iClick)=>void;
  }
+ interface SideBarProps{
+    
+    onclick?:(e:iClick)=>void;
+ }
  interface DisplayColumnsProps{
     currentBoard:iBoard;
     onclick?:(e:iClick)=>void;
@@ -39,9 +43,10 @@ const Body :FC  = () =>{
     const theme = useKanbanState((state)=>state.theme);
     // const miniModal = useKanbanState((state)=>state.miniModal);    
     const isSideBarOpen = useKanbanState((state)=>state.isSideBarOpen);
-    const className = " absolute  bottom-[5%] w-[3rem] h-[3.2rem] bg-add hover:bg-addHover rounded-l-[0rem] rounded-r-[2rem]"
+    
     const handleOnclick = (e:iClick) =>{
-        const id = e.currentTarget.id;
+        const id = e.currentTarget.id;        
+        
         switch (true) {
             case id == "create_new_board" || id == "new_board":
                 console.log('1');
@@ -63,42 +68,18 @@ const Body :FC  = () =>{
                 break;
             default:
                 break;
-        }
+        } 
     }
     return(
         <div className={`${classListExt("body",theme)} relative w-full  grow  flex  justify-between `} >
-            {isSideBarOpen? 
-                <div className={`${classListExt("sideBar",theme)}  pt-[1rem] w-left h-full border-r shrink-0  flex flex-col text-grey `}>
-                    <h3  id="boards_counts" className=" pl-sideBarLeft pb-[1.5rem] text-[0.75rem] font-bold tracking-[0.15rem]">{"ALL BOARDS " + `(${boards.length})`} </h3>
-                    {boards.length? 
-                        <DisplayBoards boards={boards} onclick={handleOnclick}/>                                                    
-                    :                                            
-                        <CreateNewBoard onClick={handleOnclick}/>
-                    }
-                    <div id="side_features" className=" pl-sideBarLeft w-full flex flex-col ">            
-                        <div id="theme_control" className={` ${classListExt("theme",theme)} w-[13.5rem] h-[3rem] flex items-center justify-around rounded-[.5rem]`}>
-                            <div className=" w-[1rem] aspect-square">
-                                <DarkTheme/>
-                            </div>
-                            <div id="theme_btn_ctrl" className=" w-[3rem] h-[1.2rem]">
-                                <button id="theme_btn" className=" relative w-full h-full bg-add rounded-[1rem]"
-                                onClick={handleOnclick}
-                                >
-                                    <div id="circle" className={classListExt("themeBtn",theme)}></div>
-                                </button>
-                            </div>
-                            <div className=" w-[1.3rem] aspect-square">
-                                <LightTheme/>
-                            </div>
-                        </div>
-                        <Hide onClick={handleOnclick}/>
-                    </div>   
-                </div>
-            :   <IconBtn id="show" onClick={handleOnclick} widthOrClass={{className}} iconWidth="full" Icon={<Show className="w-[1.1rem] aspect-square" />}/>
+            {boards.length? 
+                <SideBar onclick={handleOnclick}/>
+            :  
+                null
             }
             {
                 boards.length ? 
-                    <DisplayColumns currentBoard={currentBoard}/>
+                    <DisplayColumns currentBoard={currentBoard} onclick={handleOnclick}/>
                 :
                 <NoBoard onClick={handleOnclick} />
             }
@@ -107,7 +88,47 @@ const Body :FC  = () =>{
 }
 export default Body;
 
-
+const  SideBar: FC<SideBarProps> = ({onclick}) => {
+    const boards = useKanbanState((state)=>state.boards);    
+    const isSideBarOpen = useKanbanState((state)=>state.isSideBarOpen);
+    const theme = useKanbanState((state)=>state.theme);
+    const className = " absolute  bottom-[5%] w-[3rem] h-[3.2rem] bg-add hover:bg-addHover rounded-l-[0rem] rounded-r-[2rem]"
+    
+    return(
+        <>
+          {  isSideBarOpen?
+                <div className={`${classListExt("sideBar",theme)}  pt-[1rem] w-left h-full border-r shrink-0  flex flex-col text-grey `}>
+                    <h3  id="boards_counts" className=" pl-sideBarLeft pb-[1.5rem] text-[0.75rem] font-bold tracking-[0.15rem]">{"ALL BOARDS " + `(${boards.length})`} </h3>
+                    {boards.length? 
+                        <DisplayBoards boards={boards} onclick={onclick}/>                                                    
+                    :                                            
+                        <CreateNewBoard onClick={onclick}/>
+                    }
+                    <div id="side_features" className=" pl-sideBarLeft w-full flex flex-col ">            
+                        <div id="theme_control" className={` ${classListExt("theme",theme)} w-[13.5rem] h-[3rem] flex items-center justify-around rounded-[.5rem]`}>
+                            <div className=" w-[1rem] aspect-square">
+                                <DarkTheme/>
+                            </div>
+                            <div id="theme_btn_ctrl" className=" w-[3rem] h-[1.2rem]">
+                                <button id="theme_btn" className=" relative w-full h-full bg-add rounded-[1rem]"
+                                onClick={onclick}
+                                >
+                                    <div id="circle" className={classListExt("themeBtn",theme)}></div>
+                                </button>
+                            </div>
+                            <div className=" w-[1.3rem] aspect-square">
+                                <LightTheme/>
+                            </div>
+                        </div>
+                        <Hide onClick={onclick}/>
+                    </div>   
+                </div>
+            :
+            <IconBtn id="show" onClick={onclick} widthOrClass={{className}} iconWidth="full" Icon={<Show className="w-[1.1rem] aspect-square" />}/>
+            }
+        </>
+    )
+}
 const  DisplayColumns: FC<DisplayColumnsProps> =({currentBoard,onclick}) => {
 
 
@@ -142,6 +163,8 @@ const  DisplayColumns: FC<DisplayColumnsProps> =({currentBoard,onclick}) => {
             
         )   
     }
+
+
     const innerHeightRem = useKanbanState((state)=>state.innerHeightRem);
     const headerHeight = useKanbanState((state)=>state.headerHeight);
     return(
@@ -158,7 +181,7 @@ const  DisplayColumns: FC<DisplayColumnsProps> =({currentBoard,onclick}) => {
                 })
             
             } 
-            <CreateColumn/>
+            <CreateColumn onclick={onclick}/>
         </div>
     )
 }
@@ -215,10 +238,12 @@ const NoBoard : FC<CreateNewBoardProps> = ({onClick}) =>{
     )
 }
 
-function CreateColumn(){
+const  CreateColumn: FC<{onclick?:(e:iClick)=>void}> = ({onclick}) => {
     return(
         <div className=" pt-[2rem] w-column "> 
-            <button className="create_column w-full h-[95%] bg-gradientLight flex items-center justify-center  rounded-[0.5rem]">
+            <button id="new_column" className="create_column w-full h-[95%] bg-gradientLight flex items-center justify-center  rounded-[0.5rem]"
+                onClick={onclick}
+            >
                 <div className="  h-[2rem] flex items-baseline justify-center  gap-[0.2rem] text-[1.5rem] font-bold ">
                     <div className="w-[.7rem] aspect-square flex justify-baseline items-end ">
                         <AddTask/>

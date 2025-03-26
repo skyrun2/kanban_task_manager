@@ -13,7 +13,7 @@ import { iClick } from "../../lib/types/store";
 
 
 const Header: FC = () =>{
-
+    const currentBoard = useKanbanState((state)=>state.currentBoard);
     const setModalOpen = useKanbanState((state)=>state.actions.setModalOpen);
     const setMiniModalOpen = useKanbanState((state)=>state.actions.setMiniModalOpen);
     const theme = useKanbanState((state)=>state.theme);
@@ -52,7 +52,7 @@ const Header: FC = () =>{
                 
             </div>
             <div id="right" className=" pl-boardLeft pr-[1rem] h-full   grow  flex items-center justify-between ">
-                <h2 id="current_board" className={" text-[1.5rem] font-semibold"}> Current Board</h2>
+                <h2 id="current_board" className={" text-[1.5rem] font-semibold"}> {currentBoard.name.toUpperCase()}</h2>
                 <div id="control_features" className=" relative w-fit flex item-center justify-between gap-[1.2rem]">
                     <GeneralBtn id="add_task" text={"Add new task"} add={true}
                     onClick={handleOnClick}

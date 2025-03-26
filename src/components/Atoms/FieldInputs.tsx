@@ -6,6 +6,8 @@ const FieldInput : FC<InputProps> = ({id,width,value,disabled,required,onChange,
         opacity: disabled? "30%" : "",
         width
     }
+    
+    
     return(
         <div className=" relative flex items-end" >
             <input id={id} className={` px-[1rem] py-[.5rem] w-full h-[2.2rem] shrink-0 font-medium border-2 border-input focus:border-purple rounded-[.2rem]`} type="text" style={style}
