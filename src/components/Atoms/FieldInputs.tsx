@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { InputProps } from "../../lib/types/store";
 
-const FieldInput : FC<InputProps> = ({id,width,value,disabled,required,onChange,onClick}) =>{
+const FieldInput : FC<InputProps> = ({id,width,value,disabled,required,onChange,onClick,onBlur,status}) =>{
     const style = {
         opacity: disabled? "30%" : "",
         width
@@ -15,16 +15,17 @@ const FieldInput : FC<InputProps> = ({id,width,value,disabled,required,onChange,
                 disabled ={disabled?true:false}
                 onChange={onChange}
                 onClick={onClick}
+                onBlur={onBlur}
 
             />            
-            {required?<Required/>:null}
+            {status?.length? <Status status= {status}/>:null}
         </div>
     )
 }
 
-const Required: FC = () =>{
+const Status: FC<{status?:string}> = ({status}) =>{
     return(
-        <span className=" absolute right-[0%] px-[1rem] py-[.5rem] text-[.8rem] text-red font-bold"> Required </span>
+        <span className=" absolute right-[0%] px-[1rem] py-[.5rem] text-[.8rem] text-red font-bold">{status} </span>
     )
 }
 export default FieldInput;

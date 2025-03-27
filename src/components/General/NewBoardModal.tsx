@@ -6,16 +6,19 @@ import FieldInput from "../Atoms/FieldInputs";
 import GeneralBtn from "../Atoms/GeneralBtn";
 import { IconCross } from "../Icons";
 import IconBtn from "../Atoms/IconBtn";
-import { iChange, iClick, iColumn } from "../../lib/types/store";
+import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
 
 
 const NewBoardModal:FC = () =>{
+    const boards = useKanbanState((state)=>state.boards)
     const setBoards = useKanbanState((state)=>state.actions.setBoard);
     const setCurrentBoard = useKanbanState((state)=>state.actions.setCurrentBoard);
     const setModalClose = useKanbanState((state)=>state.actions.setModalClose);
     const theme = useKanbanState((state)=>state.theme);
     const [columnsCount, setColumnsCount] = useState(0);
-    const [columnKeyArr,setColumnKeyArr]= useState<{id:number,name:string,required:boolean}[]>([{id:0,name:"",required:false}]);    
+    const [columnKeyArr,setColumnKeyArr]= useState<{id:number,name:string,isDefault:boolean}[]>([{id:0,name:"",isDefault:true}]);    
+    const [ used, setUsed] = useState<{isUsed:boolean,index:number}>({isUsed:false,index:0});
+    const [ boardName, setBoardName] = useState<{isUsed:boolean,isRequired:boolean}>({isUsed:false,isRequired:false});
     const handleOnClick = (e:iClick) =>{
         const id : string = e.currentTarget.id;        
         e.preventDefault();                        
@@ -26,61 +29,47 @@ const NewBoardModal:FC = () =>{
                     let required : boolean = false;
                     
                     const  updatedColumnArr = columnKeyArr;
-                    columnKeyArr.forEach(e=>{
-                        if (!e.name.length) {
-                            required = true;
-                            updatedColumnArr[e.id].required = true;                            
-                            
-
-                        }
-                        else{ 
-                            required = false;
-                            updatedColumnArr[e.id].required = false;                            
-                            
-                            
-                        }
-                        
-                        
-                        
+                    columnKeyArr.forEach((e,i)=>{                                                                        
+                        if(!e.name.length) required = true;
+                        updatedColumnArr[i].isDefault = false;
                     })
-                    console.log(required,!required);
                     
-                    if( required){
-                        
+                    
+                    if( required){                        
                         setColumnKeyArr([...updatedColumnArr]);                    
                     }
                     else{
                         setColumnsCount(columnsCount+1);
-                        setColumnKeyArr([...updatedColumnArr,{id:columnsCount+1,name:"",required:false}]);
+                        setColumnKeyArr([...updatedColumnArr,{id:columnsCount+1,name:"",isDefault:true}]);
                     }
 
                 }                                
                 break;     
             case id == "nb_save":{
+                const board_name = {...document.getElementById("nb_board_name") as HTMLInputElement}.value;
                 let required : boolean = false;                                 
-                const boardName = {...document.getElementById("nb_board_name") as HTMLInputElement}.value;
-                const newColumns : iColumn[] = columnKeyArr.map(e=>{
+                const updatedColumnArr = columnKeyArr;                
+                let setBoardCondition = false;
+                const newColumns : iColumn[] = columnKeyArr.map((e,i)=>{
                     const name = e.name.trim();
-                    
-                    if (!name.length) {
-                        e.required = true;
-                        required = true;                                                
-                    }
-                    else if (name.length) {
-                        e.required = false;
-                        required = false;
-                    };
-                    
+                    if (!e.name.length) required =true;
+                    updatedColumnArr[i].isDefault = false;
                     return {name,tasks:[]}
                 })
-                console.log(required);
                 
-                if (!required){                    
-                    
-                    setBoards({name:boardName,columns:newColumns});
-                    setCurrentBoard({name:boardName,columns:newColumns})
+                setColumnKeyArr([...updatedColumnArr]);
+                
+                
+                setBoardCondition = !required && !!board_name.length &&  !boardName.isUsed;
+                setBoardName({isUsed:boardName.isUsed,isRequired:!board_name.length});
+                if (setBoardCondition){                                                 
+                    const id = boards.length;
+                    const currentBoard : iBoard = {name:board_name,columns:newColumns};
+                    setBoards({name:board_name,columns:newColumns});
+                    setCurrentBoard({id,board:currentBoard}); 
                     setModalClose();
                 }
+                
 
                     
             }
@@ -95,16 +84,55 @@ const NewBoardModal:FC = () =>{
     }
 
     const handleOnChange = (e:iChange)=>{
-        const id : string = e.currentTarget.id;    
+        const id : string = e.currentTarget.id;            
         const value : string = e.currentTarget.value;
         const index : number = Number(id.slice(3));
         const updatedColumnArr = columnKeyArr;
         updatedColumnArr[index].name = value;
-        setColumnKeyArr(updatedColumnArr);
+        updatedColumnArr[index].isDefault = false;
+        setColumnKeyArr([...updatedColumnArr]);
+        
         
         
         
     }
+    const handleOnBlur = (e:iBlur) =>{
+            const id = e.currentTarget.id.trim();
+            const index = Number(id.slice(-1));
+            
+            
+            switch (true) {
+                case id == "nb_"+String(index):{                                                        
+                    const value = {...e.currentTarget as HTMLInputElement}.value.toLowerCase();
+                    let isUsed = false;
+                    let usedIndex = 0;
+                    
+                    columnKeyArr.forEach((e,i)=>{
+                        if(value == e.name.toLowerCase() && i !== index ){
+                            isUsed = true;
+                            usedIndex = i;
+                        }                    
+                    });                                                
+                    setUsed({isUsed,index:usedIndex});                                                                                
+                }                
+                    break;
+                    case id == "nb_board_name":{ 
+                        const value = {...e.currentTarget as HTMLInputElement}.value.toLowerCase();
+                        let isUsed = false;
+                        
+                        boards.forEach((e,i)=>{
+                            if(value == e.name.toLowerCase() && i !== index ){
+                                isUsed = true;                                
+                            }
+                        })
+                        setBoardName({isUsed,isRequired:!value.length});
+                    }
+                    break;
+                default:
+                    break;
+            }
+    
+        }
     useEffect(()=>{
         
         
@@ -115,11 +143,11 @@ const NewBoardModal:FC = () =>{
            flex flex-col gap-[1rem]       
         `}>
            <h1 className=" text-[1.1rem]">Add new Board</h1>
-            <Field  text="Name" Input={<FieldInput id="nb_board_name"/>} />
+            <Field  text="Name" Input={<FieldInput  onBlur={handleOnBlur} status={boardName.isUsed? "Used" : boardName.isRequired? "Required":"" } id="nb_board_name"/>} />
             <div className="w-full flex flex-col gap-[.7rem]">
                 <p>Columns</p>
             
-                <ColumnField columnArr={columnKeyArr} onChange={handleOnChange} onClick={handleOnClick}/>
+                <ColumnField columnArr={columnKeyArr} onBlur={handleOnBlur} onChange={handleOnChange} onClick={handleOnClick} used={used}/>
                 
             </div>            
             <GeneralBtn id="nb_add_column" onClick={handleOnClick} text="Add New Column" add={true} className={` w-full h-[2.5rem] bg-bodyLight text-purple text-[0.8rem] font-bold rounded-[2rem]`} />  
@@ -129,20 +157,27 @@ const NewBoardModal:FC = () =>{
 }
 
 interface ColumnFieldProps {
+    onBlur?:(e:iBlur)=>void;
     onClick?:(e:iClick)=>void;
     onChange?:(e:iChange)=>void;
-    columnArr:{id:number,name:string,required:boolean}[];
+    columnArr:{id:number,name:string,isDefault:boolean}[];
     required?:boolean;
+    used?: {isUsed:boolean,index:number};
 }
-const ColumnField:FC<ColumnFieldProps> = ({onClick,onChange,columnArr}) =>{
+const ColumnField:FC<ColumnFieldProps> = ({onBlur,onClick,onChange,columnArr,used}) =>{
     const columnsCount = columnArr.length;
+    
+    
     return(
         <div className=" w-full flex flex-col gap-[.7rem] ">
-            {columnArr.map((e)=>{
-                console.log({name:e.name,id:e.id,required:e.required});
+            {columnArr.map((e,i)=>{                
+                const required = !e.name.length;
+                let status = "";
+                if (used?.isUsed && used.index == i) status = "Used"; 
+                if (required && !e.isDefault) status = "Required";
                 
                 return(
-                    <Field key={e.id} Input={<FieldInput id={"nb_"+String(e.id)} onChange={onChange} value={e.name}  required={e.required} width={columnsCount>1?  "24rem":null}/>}
+                    <Field key={e.id} Input={<FieldInput id={"nb_"+String(e.id)} onBlur={onBlur} onChange={onChange} value={e.name}  status={status} width={columnsCount>1?  "24rem":null}/>}
                     Icon={columnsCount>1? <IconBtn onClick={onClick}  id={String(e.id)} widthOrClass={{btnWidth:"1rem"}} iconWidth="full" Icon={<IconCross/>} />:null} 
                     
                         />

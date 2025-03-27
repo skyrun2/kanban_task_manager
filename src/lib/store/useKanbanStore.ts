@@ -10,15 +10,24 @@ const defaultState : Omit<KanbanStore,'actions'> = {
     logo: darkTheme.logo,
     Modal:undefined,
     miniModal:undefined,
+    isDropDownOpen:false,
     isModalOpen:false,
     isMiniModalOpen:false,
     isSideBarOpen:true,
     boards:[],
-    currentBoard:{name:"",columns:[]}
+    currentBoard:{id:0,board: {name:"",columns:[]} }
 }
 export const useKanbanState = create<KanbanStore>()((set,get) =>({
     ...defaultState,
     actions:{
+
+        editBoard(board) {
+            const editedBoards  = get().boards;
+            editedBoards[board.id] = board.board;
+            set({
+                boards : editedBoards,
+            })
+        },
         setBoard(board) {
             const updatedBoards : iBoard[] = [...get().boards,board];
             
@@ -28,8 +37,20 @@ export const useKanbanState = create<KanbanStore>()((set,get) =>({
             
         },
         setCurrentBoard(currentBoard) {
+            // console.log({currentBoard});
+            
             set({
                 currentBoard
+            })
+        },
+        setDropDownOpen() {
+            set({
+                isDropDownOpen:true
+            })
+        },
+        setDropDownClose() {
+            set({
+                isDropDownOpen:false
             })
         },
         setTheme: () =>{            

@@ -34,7 +34,7 @@ import IconBtn from "../Atoms/IconBtn";
  
 const Body :FC  = () =>{
     const boards = useKanbanState((state)=>state.boards);
-    const currentBoard = useKanbanState((state)=>state.currentBoard);
+    const currentBoard = useKanbanState((state)=>state.currentBoard).board;
     const setModalOpen = useKanbanState((state)=>state.actions.setModalOpen);
     const setSideBarOpen = useKanbanState((state)=>state.actions.setSideBarOpen);
     const setSideBarClose = useKanbanState((state)=>state.actions.setSideBarClose);

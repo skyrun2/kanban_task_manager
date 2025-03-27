@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import { IconBtnProps, iTheme } from "../../lib/types/store";
 
-const IconBtn : FC<IconBtnProps> = ({id,Icon,iconWidth,hover,widthOrClass,onClick}) =>{
+const IconBtn : FC<IconBtnProps> = ({id,Icon,iconWidth,hover,widthOrClass,onClick,disabled}) =>{
     const theme = useKanbanState((state)=>state.theme);
     const [isHover,setHover] = useState(false);
     const handleMouseEnter = () =>{
@@ -14,6 +14,8 @@ const IconBtn : FC<IconBtnProps> = ({id,Icon,iconWidth,hover,widthOrClass,onClic
     const iconStyle = {        
         width:`${iconWidth}`,
         backgroundColor: isHover && hover? themeStyle(hover,theme) : "transparent",
+        filter:disabled ? "opacity(40%)" : "",
+        
     }   
     function themeStyle(styleObj:{light:string,dark:string},theme:iTheme){
         if(!hover) return "transparent"
@@ -29,6 +31,7 @@ const IconBtn : FC<IconBtnProps> = ({id,Icon,iconWidth,hover,widthOrClass,onClic
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
+            disabled = {disabled}
         >
             <div className=" h-full flex items-center justify-center"
                 style={iconStyle}

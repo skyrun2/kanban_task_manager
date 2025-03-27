@@ -28,7 +28,7 @@ const Subtask: FC<{Input:ReactElement,Icon:ReactElement}> = ({Icon,Input}) =>{
     return(
         <div className="w-full flex justify-between">
                 {Input}
-                {Icon && Icon}
+                {Icon}
         </div>
     )
 }

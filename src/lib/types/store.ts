@@ -4,6 +4,7 @@ export type iTheme = "light"|"dark";
 export type iClassList =  Record<string,{light:string,dark:string}>;
 export type iClick = React.MouseEvent<HTMLElement> ;
 export type iChange = React.ChangeEvent<HTMLInputElement> ;
+export type iBlur = React.FocusEvent<HTMLInputElement> ;
 export type iMiniModal = "more"|"task"|undefined;
 
 export interface iSubtasks{
@@ -39,14 +40,21 @@ export interface FieldProps {
     Icon?:ReactElement|null;
     required?:boolean;
 }
+export interface EventListeners{
+    onClick?:(e:iClick)=>void;    
+    onChange?:(e:iChange)=>void;    
+    onBlur?:(e:iBlur)=>void;    
+}
 export interface InputProps{
     id?:string;
     width?:string|null;
     value?:string;
     disabled?:boolean;
-    required?:boolean;    
+    required?:boolean;   
+    status?: string; 
     onClick?:(e:iClick)=>void;    
     onChange?:(e:iChange)=>void;    
+    onBlur?:(e:iBlur)=>void;    
 }
 type widthOrClass = {
     btnWidth:string;
@@ -65,6 +73,7 @@ export interface IconBtnProps{
     btnWidth?:string;
     className?:string;
     widthOrClass:widthOrClass;
+    disabled?:boolean;
     
 }
 export interface CreateNewBoardProps{    
@@ -74,8 +83,11 @@ export interface NewColumnProps{
     onClick?: (e:iClick)=>void;
 }
 export interface DropDownProps{
+    id?:string
     text:string;
     className:string;
+    isDropDownOpen?:boolean 
+    columns: {columns:iColumn[],current:iColumn};
 }
 
 export interface KanbanStore{
@@ -83,24 +95,28 @@ export interface KanbanStore{
     logo: string;
     rem : number;
     innerHeightRem : number;
-    miniModal:iMiniModal;
+    miniModal:iMiniModal;    
     Modal:FC|undefined;    
-    headerHeight : number ;
+    headerHeight : number;
+    isDropDownOpen:boolean;
     isModalOpen:boolean;    
     isMiniModalOpen:boolean;
     isSideBarOpen:boolean;
-    currentBoard:iBoard;
+    currentBoard:{id:number,board:iBoard};
     boards:iBoard[];
     actions:{
-        setBoard: (board:iBoard)=>void;
-        setCurrentBoard: (currentBoard: iBoard)=>void;
+        editBoard: (board:{id:number,board:iBoard})=>void;
+        setBoard: (board:iBoard)=>void;        
+        setCurrentBoard: (currentBoard: {id:number ,board:iBoard})=>void;
+        setDropDownOpen:() =>void;
+        setDropDownClose:() =>void;
         setTheme:()=> void;
         setModalOpen:(Modal:FC)=>void;
         setModalClose:()=>void;
         setMiniModalOpen:(miniModal:iMiniModal)=>void;
         setMiniModalClose:()=>void;
         setSideBarOpen:()=>void;
-        setSideBarClose:()=>void;
+        setSideBarClose:()=>void;        
     }
 }
  

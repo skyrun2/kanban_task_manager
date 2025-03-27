@@ -11,12 +11,17 @@ import { iClick } from './lib/types/store'
 function App() {
   const isModalOpen = useKanbanState((state)=>state.isModalOpen);
   const isMiniModalOpen = useKanbanState((state)=>state.isMiniModalOpen);
+  const isDropDownOpen = useKanbanState((state)=>state.isDropDownOpen);
   const setMiniModalClose = useKanbanState((state)=>state.actions.setMiniModalClose);
+  const setDropDownClose = useKanbanState((state)=>state.actions.setDropDownClose);
   const handleOnClick = (e:iClick) =>{
       const id = e.currentTarget.id;
       
       if (isMiniModalOpen && id == "app") {
         setMiniModalClose();
+      }
+      if (isDropDownOpen && id == "app") {
+        setDropDownClose();
       }
 
   }

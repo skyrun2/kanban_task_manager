@@ -19,7 +19,8 @@ const Header: FC = () =>{
     const theme = useKanbanState((state)=>state.theme);
     const headerHeight = useKanbanState((state)=>state.headerHeight);
     const miniModal = useKanbanState((state)=>state.miniModal);
-
+    // console.log(currentBoard);   
+    
     const handleOnClick = (e:iClick)=>{
         const id : string =  e.currentTarget.id;
         switch (true) {
@@ -52,7 +53,7 @@ const Header: FC = () =>{
                 
             </div>
             <div id="right" className=" pl-boardLeft pr-[1rem] h-full   grow  flex items-center justify-between ">
-                <h2 id="current_board" className={" text-[1.5rem] font-semibold"}> {currentBoard.name.toUpperCase()}</h2>
+                <h2 id="current_board" className={" text-[1.5rem] font-semibold"}> {currentBoard.board.name.toUpperCase()}</h2>
                 <div id="control_features" className=" relative w-fit flex item-center justify-between gap-[1.2rem]">
                     <GeneralBtn id="add_task" text={"Add new task"} add={true}
                     onClick={handleOnClick}
