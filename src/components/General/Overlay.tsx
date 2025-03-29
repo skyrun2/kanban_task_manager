@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { OverlayProps } from "../../lib/types/store";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
+import TaskModal from "./TaskModal";
 
 const Overlay : FC = ()=>{
     const setModalClose = useKanbanState((state)=>state.actions.setModalClose);
@@ -24,6 +25,7 @@ const Overlay : FC = ()=>{
             onClick={handleOnClick}
             >
                 {Modal? <Modal/> : null}
+                {/* <TaskModal/> */}
             </div>
         </div>
     )

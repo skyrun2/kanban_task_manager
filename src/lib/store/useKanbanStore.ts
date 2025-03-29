@@ -15,7 +15,8 @@ const defaultState : Omit<KanbanStore,'actions'> = {
     isMiniModalOpen:false,
     isSideBarOpen:true,
     boards:[],
-    currentBoard:{id:0,board: {name:"",columns:[]} }
+    currentBoard:{id:0,board: {name:"",columns:[]} },
+    currentTask:{id:0,task: {title:"",description:"",status:"",subTasks:[]} }
 }
 export const useKanbanState = create<KanbanStore>()((set,get) =>({
     ...defaultState,
@@ -41,6 +42,13 @@ export const useKanbanState = create<KanbanStore>()((set,get) =>({
             
             set({
                 currentBoard
+            })
+        },
+        setCurrentTask(currentTask) {
+            // console.log({currentBoard});
+            
+            set({
+                currentTask
             })
         },
         setDropDownOpen() {

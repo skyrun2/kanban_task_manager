@@ -40,6 +40,7 @@ function App() {
         <Header/>
         <Body/>
         {isModalOpen?<Overlay />: null}        
+        {/* <Overlay /> */}
         </div>
     </>
   )

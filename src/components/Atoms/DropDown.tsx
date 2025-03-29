@@ -6,7 +6,7 @@ import classListExt from "../../utils/classListExt";
 
 
 const DropDown: FC<EventListeners & DropDownProps> = ({id,text,className,isDropDownOpen,onClick,columns}) =>{
-    const  [currentColumn,setCurrentColumn] = useState<iColumn>(columns[0]);
+    
 
     return(
         <div className={className}>
@@ -14,10 +14,10 @@ const DropDown: FC<EventListeners & DropDownProps> = ({id,text,className,isDropD
             <button id={id} className={` px-[1rem] py-[.5rem] w-full h-full border-2 border-input focus:border-purple  rounded-[.2rem] flex items-center justify-between`}
             onClick={onClick}
             >
-                <p>{currentColumn.name}</p>
+                <p>{columns.current.name}</p>
                 <ArrowDown className="w-[.7rem] h-[1.5rem]"/>
             </button>
-            {isDropDownOpen? <DropDownSelect columns={columns} onClick={onClick}/> : null}
+            {isDropDownOpen? <DropDownSelect columns={columns.columns} onClick={onClick}/> : null}
         </div>
     )
 }
@@ -29,9 +29,9 @@ function DropDownSelect({onClick,columns}:DropDownSelectProps&EventListeners) {
     return (
         <div className={` ${classListExt("select",theme)} py-[.6rem] absolute w-full top-[5rem]   text-right text-[.85rem] flex flex-col items-start justify-items-start gap-[.5rem] rounded-[.5rem] font-medium`}>        
             {
-                columns.map((e)=>{
+                columns.map((e,i)=>{
                     return(
-                        <button id="na_board_name" className={`  px-[1rem] w-full flex items-start hover:text-purple hover:font-semibold `}
+                        <button key={i} id={"dds_"+String(i)} className={`  px-[1rem] w-full flex items-start hover:text-purple hover:font-semibold `}
                         onClick={onClick}
                         >
                             <p>{e.name}</p>

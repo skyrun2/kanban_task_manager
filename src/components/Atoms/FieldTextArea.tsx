@@ -1,8 +1,9 @@
 import { FC } from "react";
+import { InputProps } from "../../lib/types/store";
 
-const FieldTextarea: FC = ()=>{
+const FieldTextarea: FC<InputProps> = ({id})=>{
     return(
-        <textarea name="" id="" className={`px-[1rem] py-[.5rem] w-full h-[6rem]
+        <textarea name="" id={id} className={`px-[1rem] py-[.5rem] w-full h-[6rem]
             shrink-0 font-medium resize-none border-2 border-input focus:border-purple  rounded-[.2rem]`}></textarea>
     )
 }

@@ -34,7 +34,7 @@ export interface GeneralBtnProps {
     onClick?:(e:iClick)=>void;
 
 }
-export interface FieldProps {
+export interface FieldProps  {
     text?: string;
     Input:ReactElement;
     Icon?:ReactElement|null;
@@ -103,11 +103,13 @@ export interface KanbanStore{
     isMiniModalOpen:boolean;
     isSideBarOpen:boolean;
     currentBoard:{id:number,board:iBoard};
+    currentTask:{id:number,task:iTask};
     boards:iBoard[];
     actions:{
         editBoard: (board:{id:number,board:iBoard})=>void;
         setBoard: (board:iBoard)=>void;        
         setCurrentBoard: (currentBoard: {id:number ,board:iBoard})=>void;
+        setCurrentTask: (currentBoard: {id:number ,task:iTask})=>void;
         setDropDownOpen:() =>void;
         setDropDownClose:() =>void;
         setTheme:()=> void;

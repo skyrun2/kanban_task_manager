@@ -1,14 +1,15 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 
 import { AddTask, DarkTheme, IconBoard, LightTheme, Show } from "../Icons";
 import Hide from "../Atoms/Hide";
 import GeneralBtn from "../Atoms/GeneralBtn";
-import { CreateNewBoardProps, iBoard, iClick, iColumn, iTask } from "../../lib/types/store";
+import { CreateNewBoardProps, EventListeners, iBoard, iClick, iColumn, iTask } from "../../lib/types/store";
 import NewBoardModal from "./NewBoardModal";
 import NewColumnModal from "./NewColumnModal";
 import IconBtn from "../Atoms/IconBtn";
+import TaskModal from "./TaskModal";
 
 
  interface ColumnProps {
@@ -35,6 +36,8 @@ import IconBtn from "../Atoms/IconBtn";
 const Body :FC  = () =>{
     const boards = useKanbanState((state)=>state.boards);
     const currentBoard = useKanbanState((state)=>state.currentBoard).board;
+    const currentTask = useKanbanState((state)=>state.currentTask);
+    const setCurrentTask = useKanbanState((state)=>state.actions.setCurrentTask);
     const setModalOpen = useKanbanState((state)=>state.actions.setModalOpen);
     const setSideBarOpen = useKanbanState((state)=>state.actions.setSideBarOpen);
     const setSideBarClose = useKanbanState((state)=>state.actions.setSideBarClose);
@@ -43,9 +46,18 @@ const Body :FC  = () =>{
     const theme = useKanbanState((state)=>state.theme);
     // const miniModal = useKanbanState((state)=>state.miniModal);    
     const isSideBarOpen = useKanbanState((state)=>state.isSideBarOpen);
-    
+    const tasks: iTask[] = currentBoard.columns.map((e)=>  { return e.tasks} ).flat();
+    // const [isTask,setIsTask] = useState<{index:number,isTask:boolean}>({index:0,isTask:false});
     const handleOnclick = (e:iClick) =>{
         const id = e.currentTarget.id;        
+        let  isTask :{index:number,isTask:boolean} = {index:0,isTask:false};
+        tasks.forEach((e,i)=>{
+            if(e.title == id){
+                isTask = {index:i,isTask:true};
+            }
+        })
+        
+
         
         switch (true) {
             case id == "create_new_board" || id == "new_board":
@@ -65,6 +77,11 @@ const Body :FC  = () =>{
                 break;
             case id == "hide":
                 setSideBarClose();
+                break;
+            case isTask.isTask:
+                console.log(tasks[isTask.index]);
+                setCurrentTask({id:isTask.index,task:tasks[isTask.index]});
+                setModalOpen(TaskModal)                
                 break;
             default:
                 break;
@@ -132,7 +149,7 @@ const  SideBar: FC<SideBarProps> = ({onclick}) => {
 const  DisplayColumns: FC<DisplayColumnsProps> =({currentBoard,onclick}) => {
 
 
-    const  Column:FC<ColumnProps>  = ({className,column})=>{
+    const  Column:FC<ColumnProps& EventListeners>  = ({className,column,onClick})=>{
         return(
             <div className={`  pb-[1.5rem] shrink-0 w-column flex flex-col`} >
                     <div id="column_name"  className="pb-[1rem] shrink-0 flex items-center gap-[.2rem] text-grey font-bold text-[.75rem] tracking-[0.15rem]">
@@ -143,7 +160,7 @@ const  DisplayColumns: FC<DisplayColumnsProps> =({currentBoard,onclick}) => {
                         {
                             column.tasks.map((e,i)=>{
                                 return(
-                                    <TaskCard key={i} task={e}/>           
+                                    <TaskCard key={i} onClick={onClick} task={e}/>           
                                 )
                             })
                         }
@@ -152,14 +169,16 @@ const  DisplayColumns: FC<DisplayColumnsProps> =({currentBoard,onclick}) => {
             </div>
         )
     }
-    const  TaskCard: FC<TaskCardProps> = ({task})  => {
+    const  TaskCard: FC<TaskCardProps&EventListeners> = ({task,onClick})  => {
         const theme = useKanbanState((state)=>state.theme);
         return (
             
-            <div id={task.title} className={` ${classListExt("taskCard",theme)} relative  h-[6.25rem] shrink-0 flex flex-col justify-center items-start rounded-[.5rem] hover:opacity-[75%] shadow overflow-hidden`}>
+            <button id={task.title} className={` ${classListExt("taskCard",theme)} relative  h-[6.25rem] shrink-0 flex flex-col justify-center items-start rounded-[.5rem] hover:opacity-[75%] shadow overflow-hidden`}
+            onClick={onClick}
+            >
                 <p className="pl-[1rem] h-fit w-fit font-bold">{task.title}</p>
                 <p className="pl-[1rem] h-fit w-fit  text-grey text-[.75rem] font-bold "> 0 out of {task.subTasks.length} subtask</p>            
-            </div>
+            </button>
             
         )   
     }
@@ -176,7 +195,7 @@ const  DisplayColumns: FC<DisplayColumnsProps> =({currentBoard,onclick}) => {
                     
                     const className =  e.tasks.length? "" :  "border-dashed border-2 border-lineDark";
                     return(
-                        <Column key={i} className = {className}  column={e} />
+                        <Column key={i} className = {className}  column={e} onClick={onclick} />
                     )
                 })
             

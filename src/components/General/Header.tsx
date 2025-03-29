@@ -54,15 +54,18 @@ const Header: FC = () =>{
             </div>
             <div id="right" className=" pl-boardLeft pr-[1rem] h-full   grow  flex items-center justify-between ">
                 <h2 id="current_board" className={" text-[1.5rem] font-semibold"}> {currentBoard.board.name.toUpperCase()}</h2>
-                <div id="control_features" className=" relative w-fit flex item-center justify-between gap-[1.2rem]">
-                    <GeneralBtn id="add_task" text={"Add new task"} add={true}
-                    onClick={handleOnClick}
-                    className={` w-fit bg-add hover:bg-addHover text-light text-[0.94rem] font-bold rounded-[2rem]`}  />
-                    <IconBtn id="more_btn" widthOrClass={{btnWidth:"1.2rem"}} iconWidth="100%" Icon={<More/>}  
-                    onClick={handleOnClick}
-                    hover= {{light:"#e4ebfa",dark:"#20212C"}}/>
-                    {miniModal == "more"?<DropDownSelect/>:null}
-                </div> 
+                { currentBoard.board.columns.length?
+                    <div id="control_features" className=" relative w-fit flex item-center justify-between gap-[1.2rem]">
+                        <GeneralBtn id="add_task" text={"Add new task"} add={true}
+                        onClick={handleOnClick}
+                        className={` w-fit bg-add hover:bg-addHover text-light text-[0.94rem] font-bold rounded-[2rem]`}  />
+                        <IconBtn id="more_btn" widthOrClass={{btnWidth:"1.2rem"}} iconWidth="100%" Icon={<More/>}  
+                        onClick={handleOnClick}
+                        hover= {{light:"#e4ebfa",dark:"#20212C"}}/>
+                        {miniModal == "more"?<DropDownSelect/>:null}
+                    </div> 
+                : null
+                }
             </div>
         </div>
     )
