@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import { IconBtnProps, iTheme } from "../../lib/types/store";
 
-const IconBtn : FC<IconBtnProps> = ({id,Icon,iconWidth,hover,widthOrClass,onClick,disabled}) =>{
+const IconBtn : FC<IconBtnProps> = ({id,Icon,iconHeight,iconWidth,hover,widthOrClass,onClick,disabled}) =>{
     const theme = useKanbanState((state)=>state.theme);
     const [isHover,setHover] = useState(false);
     const handleMouseEnter = () =>{
@@ -15,6 +15,8 @@ const IconBtn : FC<IconBtnProps> = ({id,Icon,iconWidth,hover,widthOrClass,onClic
         width:`${iconWidth}`,
         backgroundColor: isHover && hover? themeStyle(hover,theme) : "transparent",
         filter:disabled ? "opacity(40%)" : "",
+        height: iconHeight,
+        
         
     }   
     function themeStyle(styleObj:{light:string,dark:string},theme:iTheme){
@@ -22,7 +24,7 @@ const IconBtn : FC<IconBtnProps> = ({id,Icon,iconWidth,hover,widthOrClass,onClic
         if(theme == "light") return styleObj.light;
         else if(theme == "dark") return styleObj.dark;
     }
-    let className = `rounded-[1rem] flex items-center justify-center overflow-hidden`
+    let className = `rounded-[1rem] shrink-0 flex items-center justify-center overflow-hidden`
     if(widthOrClass.className) className += widthOrClass.className
     
     return(        

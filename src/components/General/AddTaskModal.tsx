@@ -129,6 +129,8 @@ const  AddTaskModal : FC = () =>{
         const id = e.currentTarget.id;
         const value = e.currentTarget.value.toLowerCase();
         const index = id.split("_")[id.split("_").length-1];
+        console.log(id);
+        
         switch (true) {
             case id ==  "na_"+index:{
                 let isUsed = false;

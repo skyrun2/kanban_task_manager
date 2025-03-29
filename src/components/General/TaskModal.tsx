@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import { EventListeners, iClick, iSubtasks, iTask } from "../../lib/types/store";
 import Field from "./Field";
@@ -8,7 +8,8 @@ import GeneralBtn from "../Atoms/GeneralBtn";
 import DropDown from "../Atoms/DropDown";
 import FieldTextarea from "../Atoms/FieldTextArea";
 import classListExt from "../../utils/classListExt";
-import { IconCross } from "../Icons";
+import { IconCross, More } from "../Icons";
+import FieldCheckBox from "../Atoms/FieldCheckBox";
 
 const  TaskModal : FC = () =>{
     const editBoard = useKanbanState((state)=>state.actions.editBoard);
@@ -16,33 +17,91 @@ const  TaskModal : FC = () =>{
     const isDropDownOpen = useKanbanState((state)=>state.isDropDownOpen);
     const currentBoard = useKanbanState((state)=>state.currentBoard);
     const currentTask = useKanbanState((state)=>state.currentTask);
+    const setCurrentTask = useKanbanState((state)=>state.actions.setCurrentTask);
     const columns = currentBoard.board.columns;
+    const setDropDownOpen = useKanbanState((state)=>state.actions.setDropDownOpen);
 
     const  [currentColumn,setCurrentColumn] = useState(0);
     const [newTask,setNewTask] = useState<iTask>({title:"",description:"",status:"",subTasks:[]});
+    const [subTasks,setSubTasks] = useState<iSubtasks[]>(currentTask.task.subTasks);
     
     
     
     
 
     const handleOnClick = (e:iClick) =>{
-            e.preventDefault();
-            // const id = e.currentTarget.id;
-            
-            
-            
-            
-        }
+        e.preventDefault();
+        const id = e.currentTarget.id;        
+        const index = id.split("_")[id.split("_").length-1];
+        
+        
+        const updatedSubtasks = currentTask.task.subTasks;
+        const updatedTask = currentTask.task;
+        const updatedBoard = currentBoard.board;
+        
+        switch (true) {
+            case id ==  "t_"+index:{
+                updatedSubtasks[Number(index)].isCompleted = !updatedSubtasks[Number(index)].isCompleted;
+                updatedTask.subTasks = updatedSubtasks;                                                                
+                updatedBoard.columns[currentTask.column].tasks[currentTask.id] = updatedTask;
+                editBoard({id:currentBoard.id,board:{...updatedBoard}});
+                setSubTasks([...updatedSubtasks]);
 
+                
+            }
+            break;
+            case id == "t_dropdown_btn":                                
+                setDropDownOpen();
+                break;
+
+            case id == "dds_"+index:{
+                const wer = [...currentBoard.board.columns];
+                wer[currentTask.column].tasks.splice(currentTask.id,1);
+                console.log(wer[currentTask.column]);
+                updatedTask.status = updatedBoard.columns[Number(index)].name;
+                updatedBoard.columns[Number(index)].tasks.push(updatedTask)
+                updatedBoard.columns[currentTask.column].tasks.splice(currentTask.id,1);
+                setCurrentTask({
+                    id:updatedBoard.columns[Number(index)].tasks.length,
+                    task:updatedTask,
+                    column:Number(index)
+
+                })
+                editBoard({id:currentBoard.id,board:{...updatedBoard}});
+                
+                
+            }
+                break;
+            default:
+                break;
+        }
+        
+        
+        
+    }
+    // useEffect(()=>{
+    //     console.log(currentBoard.board);
+        
+    // },[currentBoard.board])
     return(
-        <div className={`${classListExt("priModal",theme)} absolute top-[50%] left-[50%] p-[2rem] pb-[3rem] ab_center w-[30rem] min-h-[35rem]
+        <div className={`${classListExt("priModal",theme)} absolute top-[50%] left-[50%] p-[2rem] pb-[3rem] ab_center w-[30rem] min-h-[25rem]
                          rounded-[.5rem] text-[0.75rem] font-bold
                             flex flex-col gap-[1rem]       
                          `}>
-                <h1 className="text-[1.125rem]">{}</h1>                                
-                <Field  text="Description" Input={<FieldTextarea id="nt_desc" />}/>
-                <SubTasks subtasks={currentTask.task.subTasks}/>                
-                <DropDown id ="nt_dropdown_btn" columns={{columns,current:currentBoard.board.columns[currentColumn]}} text="Status" className={` relative w-full flex flex-col gap-[.7rem]`}  onClick={handleOnClick} isDropDownOpen={isDropDownOpen}/>                
+                <div className="w-full flex items-center justify-between  ">
+                    <h1 className="text-[1.125rem]">{currentTask.task.title}</h1>
+                    <div className=" relative w-fit ">
+                        <IconBtn id="more_btn" widthOrClass={{btnWidth:"1.2rem"}} iconWidth="100%" iconHeight="2rem" Icon={<More/>}
+                            onClick={handleOnClick}
+                            hover= {{light:"#e4ebfa",dark:"#20212C"}}
+                        />
+                        <DropDownSelect/>
+                    </div>
+                        
+                </div>
+                <p className=" font-semibold text-[.81rem] text-grey ">{currentTask.task.description.length? currentTask.task.description.length:"No description"}</p>                
+                <SubTasks subtasks={subTasks} onClick={handleOnClick}/>                
+                <DropDown id ="t_dropdown_btn" columns={{columns,current:currentBoard.board.columns[currentColumn]}} text="Status" className={` relative w-full flex flex-col gap-[.7rem]`}  onClick={handleOnClick} isDropDownOpen={isDropDownOpen}/>                
                 
         </div>
     )       
@@ -50,20 +109,33 @@ const  TaskModal : FC = () =>{
 interface SubTasksProps{
     subtasks:iSubtasks[];
 }
-const SubTasks : FC<EventListeners & SubTasksProps> = ({onChange,onBlur,subtasks}) =>{
+const SubTasks : FC<EventListeners & SubTasksProps> = ({subtasks,onClick}) =>{
     return(
         <div className=" w-full flex flex-col gap-[.7rem] ">
             <p>Subtasks</p>      
             {
-                subtasks.map((e,i)=>{
-                    const count = subtasks.length;                                        
+                subtasks.map((e,i)=>{                                                        
                     return(
-                        <Field key={i}  Input={<FieldInput id={"na_"+String(i)} onBlur={onBlur} onChange={onChange}  value={e.title} width={count>1?"24rem":null}/>} 
-                        Icon={count>1?<IconBtn id="" widthOrClass={{btnWidth:"1rem"}} iconWidth="full" Icon={<IconCross/>}/>:null }/>                     
+                        <Field key={i} Input={<FieldCheckBox id={"t_"+String(i)} onClick={onClick} subtask={e} isComplete={e.isCompleted} />} />
                     )
                 })
             }      
         </div>
+    )
+}
+function DropDownSelect() {
+    const theme = useKanbanState((state)=>state.theme);
+    return (
+        <div className={` ${classListExt("select",theme)} py-[1rem] absolute left-[100%] top-[3rem] translate w-[12rem] h-fit   z-10  text-right text-[1rem] flex flex-col items-start justify-items-start gap-[.5rem] rounded-[.5rem] font-[500]`}>
+            <button className={`  px-[1rem]  w-full  flex items-start text-grey hover:opacity-[50%] `}>
+                <p>Edit Board</p>
+            </button>
+            <button className={`  px-[1rem] w-full flex items-start text-red opacity-[90%] hover:opacity-[50%]`}>
+                <p>Delete Board</p>
+            </button> 
+            
+            
+        </div>                
     )
 }
 

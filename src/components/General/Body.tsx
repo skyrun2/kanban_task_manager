@@ -78,10 +78,20 @@ const Body :FC  = () =>{
             case id == "hide":
                 setSideBarClose();
                 break;
-            case isTask.isTask:
+            case isTask.isTask:{
                 console.log(tasks[isTask.index]);
-                setCurrentTask({id:isTask.index,task:tasks[isTask.index]});
-                setModalOpen(TaskModal)                
+                console.log();
+                let columnIndex = 0;
+                currentBoard.columns.forEach((e,i)=>{
+                    if(e.tasks.includes(tasks[isTask.index])){
+                        columnIndex = i
+                    }
+                })
+                
+                
+                setCurrentTask({id:isTask.index,task:tasks[isTask.index],column:columnIndex});
+                setModalOpen(TaskModal);
+            }            
                 break;
             default:
                 break;

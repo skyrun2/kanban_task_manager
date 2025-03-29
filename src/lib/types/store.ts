@@ -69,6 +69,7 @@ export interface IconBtnProps{
     Icon:ReactElement ;
     hover?:{light:string,dark:string};
     iconWidth: string;
+    iconHeight?: string;
     onClick?:(e:iClick)=>void;    
     btnWidth?:string;
     className?:string;
@@ -103,13 +104,13 @@ export interface KanbanStore{
     isMiniModalOpen:boolean;
     isSideBarOpen:boolean;
     currentBoard:{id:number,board:iBoard};
-    currentTask:{id:number,task:iTask};
+    currentTask:{id:number,task:iTask,column:number};
     boards:iBoard[];
     actions:{
         editBoard: (board:{id:number,board:iBoard})=>void;
         setBoard: (board:iBoard)=>void;        
         setCurrentBoard: (currentBoard: {id:number ,board:iBoard})=>void;
-        setCurrentTask: (currentBoard: {id:number ,task:iTask})=>void;
+        setCurrentTask: (currentTask: {id:number ,task:iTask,column:number})=>void;
         setDropDownOpen:() =>void;
         setDropDownClose:() =>void;
         setTheme:()=> void;

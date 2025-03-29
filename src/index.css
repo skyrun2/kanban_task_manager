@@ -53,6 +53,9 @@ input,textarea{
     box-shadow: rgba(54, 78, 126, 0.1)  0px 4px 6px;
     
 }
+.translate{
+    transform: translateX(-50%);
+}
 /* #show{
     position: absolute;
     
@@ -70,6 +73,43 @@ input,textarea{
 .ab_center{
     transform: translateY(-50%) translateX(-50%);
 }
+input[type="checkbox"]{
+    position: relative;
+    border:  rgba(130, 143, 163, 0.4) solid 1px;
+    overflow: hidden;
+}
+
+  
+  /* Add a checkmark when checked (optional) */
+input[type="checkbox"]:checked  {
+    content: "✓";    
+    background-color: #635fc7;    
+}
+.checkmark{
+    position: absolute;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+.checkmark::after  {
+    content: "\2713";    
+    position: absolute;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    width: 100%;
+    background-color: #635fc7;
+    font-size: .7rem;
+    font-weight: 700;        
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+
+
 
 /* e4ebf */
 /* #side_bar{

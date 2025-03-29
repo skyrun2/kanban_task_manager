@@ -63,6 +63,7 @@ const Header: FC = () =>{
                         onClick={handleOnClick}
                         hover= {{light:"#e4ebfa",dark:"#20212C"}}/>
                         {miniModal == "more"?<DropDownSelect/>:null}
+                        
                     </div> 
                 : null
                 }
@@ -75,16 +76,26 @@ const Header: FC = () =>{
 function DropDownSelect() {
     const theme = useKanbanState((state)=>state.theme);
     return (
-        <div className={` ${classListExt("select",theme)} shadow p-[1rem] absolute top-[3.5rem] w-full    text-right text-[1rem] flex flex-col items-start justify-items-start gap-[.5rem] rounded-[.5rem] font-medium `}>
-            <button className={`  px-[1rem]  w-full flex items-start text-grey hover:opacity-[50%] `}>
+        <div className={` ${classListExt("select",theme)} py-[.6rem] absolute w-full h-fit top-[3.5rem] z-10  text-right text-[1rem] flex flex-col items-start justify-items-start gap-[.5rem] rounded-[.5rem] font-medium`}>
+            <button className={`  px-[1rem]  w-full  flex items-start text-grey hover:opacity-[50%] `}>
                 <p>Edit Board</p>
             </button>
             <button className={`  px-[1rem] w-full flex items-start text-red opacity-[90%] hover:opacity-[50%]`}>
                 <p>Delete Board</p>
-            </button>
+            </button> 
             
             
         </div>
+        // <div className={ `${classListExt("select",theme)} absolute  w-full  flex flex-col items-start justify-items-start gap-[.5rem] rounded-[.5rem] font-medium`}>
+        //     <button className={`  px-[1rem]  w-full  flex items-start text-grey hover:opacity-[50%] `}>
+        //         <p>Edit Board</p>
+        //     </button>
+        //     <button className={`  px-[1rem] w-full flex items-start text-red opacity-[90%] hover:opacity-[50%]`}>
+        //         <p>Delete Board</p>
+        //     </button> 
+        // </div>
+        
     )
 }
 export default Header; 
+
