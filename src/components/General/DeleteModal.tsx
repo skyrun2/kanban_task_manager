@@ -2,23 +2,23 @@ import { FC } from "react";
 import classListExt from "../../utils/classListExt";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import GeneralBtn from "../Atoms/GeneralBtn";
-import { iClick } from "../../lib/types/store";
+// import { iClick } from "../../lib/types/store";
 
 const DeleteModal : FC = () =>{
     const theme = useKanbanState((state)=>state.theme);
-    const handleOnClick = (e:iClick)=>{
-        const id = e.currentTarget.id;
-        switch (true) {
-            // case id == "m_delete":{
+    // const handleOnClick = (e:iClick)=>{
+    //     const id = e.currentTarget.id;
+    //     switch (true) {
+    //         // case id == "m_delete":{
 
-            // }
+    //         // }
                 
-                // break;
+    //             // break;
         
-            default:
-                break;
-        }
-    }
+    //         default:
+    //             break;
+    //     }
+    // }
     return(
         <div className={`${classListExt("priModal",theme)} absolute top-[50%] left-[50%] p-[2rem] pb-[3rem] ab_center w-[30rem] h-[15rem]
                          rounded-[.5rem] text-[0.75rem] font-bold

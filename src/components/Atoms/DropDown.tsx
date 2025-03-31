@@ -1,5 +1,5 @@
-import { FC, useState } from "react";
-import { DropDownProps, EventListeners, iBoard, iColumn } from "../../lib/types/store";
+import { FC } from "react";
+import { DropDownProps, EventListeners, iColumn } from "../../lib/types/store";
 import { ArrowDown } from "../Icons";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";

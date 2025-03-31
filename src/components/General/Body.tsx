@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 
@@ -37,7 +37,7 @@ const Body :FC  = () =>{
     const boards = useKanbanState((state)=>state.boards);
     const currentBoard = useKanbanState((state)=>state.currentBoard).board;
     const currentBoardId = useKanbanState((state)=>state.currentBoard).id;
-    const currentTask = useKanbanState((state)=>state.currentTask);
+    // const currentTask = useKanbanState((state)=>state.currentTask);
     const setCurrentBoard = useKanbanState((state)=>state.actions.setCurrentBoard);
     const setCurrentTask = useKanbanState((state)=>state.actions.setCurrentTask);
     const setModalOpen = useKanbanState((state)=>state.actions.setModalOpen);
@@ -47,7 +47,7 @@ const Body :FC  = () =>{
     const setTheme = useKanbanState((state)=>state.actions.setTheme);
     const theme = useKanbanState((state)=>state.theme);
     // const miniModal = useKanbanState((state)=>state.miniModal);    
-    const isSideBarOpen = useKanbanState((state)=>state.isSideBarOpen);
+    // const isSideBarOpen = useKanbanState((state)=>state.isSideBarOpen);
     const tasks: iTask[] = currentBoard.columns.map((e)=>  { return e.tasks} ).flat();
     // const [isTask,setIsTask] = useState<{index:number,isTask:boolean}>({index:0,isTask:false});
     const handleOnclick = (e:iClick) =>{
@@ -245,16 +245,16 @@ const  DisplayBoards: FC<DisplayBoardsProps> =  ({boards,onclick}) =>{
 
 
 
-const NoColumn : FC<CreateNewBoardProps> = ({onClick}) =>{
-    return(
-        <div className="w-full h-full flex  flex-col items-center justify-center gap-[1.8rem] text-grey font-bold"
-        // style={{height:`${innerHeightRem-headerHeight}rem`}}
-         >
-            <p>This board is empty. Create new column to get started</p>
-            <GeneralBtn id="new_column" onClick={onClick} text="Add New Column" add={true} className={`  bg-add hover:bg-addHover text-light text-[0.8rem] font-bold rounded-[2rem]`}/>
-        </div>
-    )
-}
+// const NoColumn : FC<CreateNewBoardProps> = ({onClick}) =>{
+//     return(
+//         <div className="w-full h-full flex  flex-col items-center justify-center gap-[1.8rem] text-grey font-bold"
+//         // style={{height:`${innerHeightRem-headerHeight}rem`}}
+//          >
+//             <p>This board is empty. Create new column to get started</p>
+//             <GeneralBtn id="new_column" onClick={onClick} text="Add New Column" add={true} className={`  bg-add hover:bg-addHover text-light text-[0.8rem] font-bold rounded-[2rem]`}/>
+//         </div>
+//     )
+// }
 const NoBoard : FC<CreateNewBoardProps> = ({onClick}) =>{
     return(
         <div className="w-full h-full flex  flex-col items-center justify-center gap-[1.8rem] text-grey font-bold"

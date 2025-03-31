@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { InputProps } from "../../lib/types/store";
 
-const FieldInput : FC<InputProps> = ({id,width,value,disabled,required,onChange,onClick,onBlur,status}) =>{
+const FieldInput : FC<InputProps> = ({id,width,value,disabled,onChange,onClick,onBlur,status}) =>{
     const style = {
         opacity: disabled? "30%" : "",
-        width:width,
+        width:width? width:"",
     }
     
     
