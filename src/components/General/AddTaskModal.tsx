@@ -1,4 +1,4 @@
-import { FC, use, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 import GeneralBtn from "../Atoms/GeneralBtn";
@@ -9,7 +9,7 @@ import IconBtn from "../Atoms/IconBtn";
 
 import FieldTextarea from "../Atoms/FieldTextArea";
 import DropDown from "../Atoms/DropDown";
-import { EventListeners, iBlur, iChange, iClick, iColumn, iSubtasks, iTask } from "../../lib/types/store";
+import { EventListeners, iBlur, iChange, iClick,iSubtasks, iTask } from "../../lib/types/store";
 
 const  AddTaskModal : FC = () =>{
     const editBoard = useKanbanState((state)=>state.actions.editBoard);
@@ -19,7 +19,7 @@ const  AddTaskModal : FC = () =>{
     const isDropDownOpen = useKanbanState((state)=>state.isDropDownOpen);
     const currentBoard = useKanbanState((state)=>state.currentBoard);
     const columns = currentBoard.board.columns;
-    const [newTask,setNewTask] = useState<iTask>({title:task.title,description:task.description,status:task.status,subTasks:task.subTasks});
+    // const [newTask,setNewTask] = useState<iTask>({title:task.title,description:task.description,status:task.status,subTasks:task.subTasks});
     const  [currentColumn,setCurrentColumn] = useState(currentTask.column);
     const setDropDownOpen = useKanbanState((state)=>state.actions.setDropDownOpen);
     const setModalClose = useKanbanState((state)=>state.actions.setModalClose);
@@ -27,7 +27,7 @@ const  AddTaskModal : FC = () =>{
     const  [subTasks,setSubTasks] = useState<{id:number,name:string,isDefault:boolean}[]>([{id:0,name:"",isDefault:true}]);    
     const [ taskName, setTaskName] = useState<{isUsed:boolean,isRequired:boolean,status?:string,name:string}>({isUsed:false,isRequired:false,status:"",name:""});
     const [desc,setDesc] = useState(task.description);
-    const [tasks, setTasks] = useState<iTask[]>(currentBoard.board.columns.map((e)=>  { return e.tasks} ).flat());
+    const tasks = currentBoard.board.columns.map((e)=>  { return e.tasks} ).flat();
     const [ used, setUsed] = useState<{isUsed:boolean,index:number}>({isUsed:false,index:0});
     
     

@@ -6,6 +6,11 @@ function classListExt(element:string,theme:iTheme) {
             light:" bg-mainLight text-dark",
             dark:" bg-mainDark text-light"
         },        
+        checkBox  :  {
+            light:"  bg-mainLight text-dark",
+            dark:" bg-mainDark text-light"
+        },        
+
         body  :  {
             light:" bg-boardCardLight ",
             dark:" bg-boardCardDark "
