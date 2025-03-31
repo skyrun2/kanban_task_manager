@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, use, useEffect, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 import GeneralBtn from "../Atoms/GeneralBtn";
@@ -14,18 +14,23 @@ import { EventListeners, iBlur, iChange, iClick, iColumn, iSubtasks, iTask } fro
 const  AddTaskModal : FC = () =>{
     const editBoard = useKanbanState((state)=>state.actions.editBoard);
     const theme = useKanbanState((state)=>state.theme);
+    const currentTask = useKanbanState((state)=>state.currentTask);
+    const task = useKanbanState((state)=>state.currentTask).task;
     const isDropDownOpen = useKanbanState((state)=>state.isDropDownOpen);
     const currentBoard = useKanbanState((state)=>state.currentBoard);
-    const columns = currentBoard.board.columns
-    const [newTask,setNewTask] = useState<iTask>({title:"",description:"",status:"",subTasks:[]});
-    const  [currentColumn,setCurrentColumn] = useState(0);
+    const columns = currentBoard.board.columns;
+    const [newTask,setNewTask] = useState<iTask>({title:task.title,description:task.description,status:task.status,subTasks:task.subTasks});
+    const  [currentColumn,setCurrentColumn] = useState(currentTask.column);
     const setDropDownOpen = useKanbanState((state)=>state.actions.setDropDownOpen);
     const setModalClose = useKanbanState((state)=>state.actions.setModalClose);
     const [subTasksCount, setSubtasksCount] = useState(0);
     const  [subTasks,setSubTasks] = useState<{id:number,name:string,isDefault:boolean}[]>([{id:0,name:"",isDefault:true}]);    
-    const [ taskName, setTaskName] = useState<{isUsed:boolean,isRequired:boolean,status?:string}>({isUsed:false,isRequired:false,status:""});
+    const [ taskName, setTaskName] = useState<{isUsed:boolean,isRequired:boolean,status?:string,name:string}>({isUsed:false,isRequired:false,status:"",name:""});
+    const [desc,setDesc] = useState(task.description);
     const [tasks, setTasks] = useState<iTask[]>(currentBoard.board.columns.map((e)=>  { return e.tasks} ).flat());
     const [ used, setUsed] = useState<{isUsed:boolean,index:number}>({isUsed:false,index:0});
+    
+    
     
     
     const handleOnClick = (e:iClick) =>{
@@ -45,14 +50,17 @@ const  AddTaskModal : FC = () =>{
             case id == "nt_add_subtask":{
                 let isRequired = false;
                 const updatedSubtasks  = subTasks;
+                let isOkay = false;
                 subTasks.forEach((e,i)=>{
                     const value = e.name.trim();
-                    if (!value.length) isRequired = true;
+                    if (!value.length) isRequired = true;                    
                     updatedSubtasks[i].isDefault = false;
                     updatedSubtasks[i].name = value;
                 })
+                isOkay = !used.isUsed && !isRequired;
                 
-                if(!isRequired){
+                
+                if(isOkay){
                     setSubtasksCount(subTasksCount+1);
                     setSubTasks([...updatedSubtasks,{id:subTasksCount+1,name:"",isDefault:true}]);
                 }
@@ -65,20 +73,40 @@ const  AddTaskModal : FC = () =>{
                 const taskDesc = {...document.getElementById("nt_desc") as HTMLTextAreaElement}.value.trim();
                 const sub_tasks : iSubtasks[] = []
                 let isRequired =  false;
-                
+                let isOkay = false;                            
+                let isUsed = false;                                
+                tasks.forEach((e)=>{
+                    if(e.title.toLowerCase() === task_name ){
+                        isUsed = true;
+                    }
+                })
+                if(isUsed){
+
+                    setTaskName({isUsed,isRequired:taskName.isRequired,status:"Used",name:task_name});
+                }
+                else{
+                    setTaskName({isUsed,isRequired:taskName.isRequired,status:"",name:task_name});
+                }
 
                 if(!task_name.length){
                     isRequired = true;
 
                 }
-                if (isRequired) {
-                    setTaskName({isUsed:taskName.isUsed,isRequired, status:"Required"});   
+                if (currentTask.isEditing){
+                    isOkay = !used.isUsed && !isRequired ;                    
                 }
-                else if(taskName.isUsed){
-                    setTaskName({isUsed:taskName.isUsed,isRequired,status:"Used"});                                    
+                else isOkay = !used.isUsed && !isRequired && !isUsed;
+                
+
+                
+                if (isRequired) {
+                    setTaskName({isUsed:taskName.isUsed,isRequired, status:"Required",name:task_name});   
+                }
+                else if(isUsed){
+                    setTaskName({isUsed:taskName.isUsed,isRequired,status:"Used",name:task_name});   
                 }
                 else{
-                    setTaskName({isUsed:taskName.isUsed,isRequired,status:""});                                    
+                    setTaskName({isUsed:taskName.isUsed,isRequired,status:"",name:task_name});   
                 }
                 const updatedSubtasks  = subTasks;
                 subTasks.forEach((e,i)=>{
@@ -89,11 +117,18 @@ const  AddTaskModal : FC = () =>{
                     sub_tasks.push({title:e.name,isCompleted:false});
                 })
                 
+                console.log(isOkay,isUsed);
                 
-                if(!isRequired){
+                if(isOkay){
                     const status =  columns[currentColumn].name
                     const task: iTask = {title:task_name,subTasks:sub_tasks,description:taskDesc,status};
-                    board.columns[currentColumn].tasks.push(task)
+                    if(currentTask.isEditing){
+                        board.columns[currentColumn].tasks[currentTask.id] = task;
+                        
+                    }
+                    else {                        
+                        board.columns[currentColumn].tasks.push(task)
+                    }
                     editBoard({id:currentBoard.id,board});
                     setModalClose();
                     
@@ -111,13 +146,9 @@ const  AddTaskModal : FC = () =>{
         switch (true) {
             case id ==  "na_"+index:{
                 const updatedSubTasks = subTasks;
-                // if(!subTasks[Number(index)].name.length){
-                    updatedSubTasks[Number(index)].isDefault = false;
-                    updatedSubTasks[Number(index)].name = value;
-                    setSubTasks([...updatedSubTasks]);
-                    
-                    
-                // }
+                updatedSubTasks[Number(index)].isDefault = false;
+                updatedSubTasks[Number(index)].name = value;
+                setSubTasks([...updatedSubTasks]);                                        
             }        
                 break;            
             default:
@@ -129,7 +160,6 @@ const  AddTaskModal : FC = () =>{
         const id = e.currentTarget.id;
         const value = e.currentTarget.value.toLowerCase();
         const index = id.split("_")[id.split("_").length-1];
-        console.log(id);
         
         switch (true) {
             case id ==  "na_"+index:{
@@ -161,18 +191,34 @@ const  AddTaskModal : FC = () =>{
                 })
                 if(isUsed){
 
-                    setTaskName({isUsed,isRequired:taskName.isRequired,status:"Used"});
+                    setTaskName({isUsed,isRequired:taskName.isRequired,status:"Used",name:task_name});
                 }
                 else{
-                    setTaskName({isUsed,isRequired:taskName.isRequired,status:""});
+                    setTaskName({isUsed,isRequired:taskName.isRequired,status:"",name:task_name});
                 }
             }        
                 break;
-        
+    case id == "nt_desc":{
+                const desc = {...document.getElementById("nt_desc") as HTMLInputElement}.value.trim();
+                setDesc(desc);
+    }
+                break;
             default:
                 break;
         }
     }
+    useEffect(()=>{
+        const updatedSubTasks = [...subTasks];
+        updatedSubTasks.splice(0,1);
+        if (task.subTasks.length) {
+                task.subTasks.forEach((e,i)=>{
+                updatedSubTasks.push({id:i,name:e.title,isDefault:true});
+            })            
+            setSubTasks([...updatedSubTasks]);
+            setTaskName({isUsed:taskName.isUsed,isRequired:false,status:"",name:task.title});   
+        }
+        
+    },[])
     
     return(
         <div className={`${classListExt("priModal",theme)} absolute top-[50%] left-[50%] p-[2rem] pb-[3rem] ab_center w-[30rem] min-h-[35rem]
@@ -180,8 +226,8 @@ const  AddTaskModal : FC = () =>{
                             flex flex-col gap-[1rem]       
                          `}>
             <h1 className="text-[1.125rem]">Add New Tasks</h1>                
-            <Field text="Title" Input={<FieldInput id="na_title" onBlur={handleOnBlur} status={taskName.status}/>} />
-            <Field  text="Description" Input={<FieldTextarea id="nt_desc" />}/>
+            <Field text="Title" Input={<FieldInput id="na_title" onBlur={handleOnBlur} value={taskName.name} status={taskName.status}/>} />
+            <Field  text="Description" Input={<FieldTextarea id="nt_desc" value={desc} />}/>
             <SubTasks subtasks={subTasks} onChange={handleOnChange} onBlur={handleOnBlur} used={used}/>
             <GeneralBtn id="nt_add_subtask" onClick={handleOnClick} text="Add New Subtask" add={true} className={` w-full h-[2.5rem] bg-bodyLight text-purple text-[0.8rem] font-bold rounded-[2rem]`} />                                                
             <DropDown id ="nt_dropdown_btn" columns={{columns,current:currentBoard.board.columns[currentColumn]}} text="Status" className={` relative w-full flex flex-col gap-[.7rem]`}  onClick={handleOnClick} isDropDownOpen={isDropDownOpen}/>                

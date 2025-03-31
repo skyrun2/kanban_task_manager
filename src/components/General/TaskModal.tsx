@@ -1,15 +1,16 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
-import { EventListeners, iClick, iSubtasks, iTask } from "../../lib/types/store";
+import { EventListeners, iClick, iSubtasks } from "../../lib/types/store";
 import Field from "./Field";
-import FieldInput from "../Atoms/FieldInputs";
+
 import IconBtn from "../Atoms/IconBtn";
-import GeneralBtn from "../Atoms/GeneralBtn";
+
 import DropDown from "../Atoms/DropDown";
-import FieldTextarea from "../Atoms/FieldTextArea";
+
 import classListExt from "../../utils/classListExt";
-import { IconCross, More } from "../Icons";
+import { More } from "../Icons";
 import FieldCheckBox from "../Atoms/FieldCheckBox";
+import AddTaskModal from "./AddTaskModal";
 
 const  TaskModal : FC = () =>{
     const editBoard = useKanbanState((state)=>state.actions.editBoard);
@@ -20,10 +21,9 @@ const  TaskModal : FC = () =>{
     const setCurrentTask = useKanbanState((state)=>state.actions.setCurrentTask);
     const columns = currentBoard.board.columns;
     const setDropDownOpen = useKanbanState((state)=>state.actions.setDropDownOpen);
-
-    const  [currentColumn,setCurrentColumn] = useState(0);
-    const [newTask,setNewTask] = useState<iTask>({title:"",description:"",status:"",subTasks:[]});
+    const setModalOpen = useKanbanState((state)=>state.actions.setModalOpen);
     const [subTasks,setSubTasks] = useState<iSubtasks[]>(currentTask.task.subTasks);
+    
     
     
     
@@ -54,22 +54,29 @@ const  TaskModal : FC = () =>{
                 setDropDownOpen();
                 break;
 
-            case id == "dds_"+index:{
-                const wer = [...currentBoard.board.columns];
-                wer[currentTask.column].tasks.splice(currentTask.id,1);
-                console.log(wer[currentTask.column]);
+            case id == "dds_"+index:{                
+                //SET NEW STATUS OF THE TASK
                 updatedTask.status = updatedBoard.columns[Number(index)].name;
-                updatedBoard.columns[Number(index)].tasks.push(updatedTask)
+                // DELETE TASK FROM PREVIOUS COLUMN
+                updatedBoard.columns[Number(index)].tasks.push(updatedTask);
+                // ADD TASK TO NEW COLUMN
                 updatedBoard.columns[currentTask.column].tasks.splice(currentTask.id,1);
+                //SET CURRENT TASK
                 setCurrentTask({
-                    id:updatedBoard.columns[Number(index)].tasks.length,
+                    id:updatedBoard.columns[Number(index)].tasks.length-1,
                     task:updatedTask,
                     column:Number(index)
 
                 })
+                //EDIT CURRENT BOARD
                 editBoard({id:currentBoard.id,board:{...updatedBoard}});
                 
                 
+            }
+            break;
+            case id =="t_edit_task":{
+
+                setModalOpen(AddTaskModal);
             }
                 break;
             default:
@@ -95,13 +102,13 @@ const  TaskModal : FC = () =>{
                             onClick={handleOnClick}
                             hover= {{light:"#e4ebfa",dark:"#20212C"}}
                         />
-                        <DropDownSelect/>
+                        <DropDownSelect onClick={handleOnClick}/>
                     </div>
                         
                 </div>
                 <p className=" font-semibold text-[.81rem] text-grey ">{currentTask.task.description.length? currentTask.task.description.length:"No description"}</p>                
                 <SubTasks subtasks={subTasks} onClick={handleOnClick}/>                
-                <DropDown id ="t_dropdown_btn" columns={{columns,current:currentBoard.board.columns[currentColumn]}} text="Status" className={` relative w-full flex flex-col gap-[.7rem]`}  onClick={handleOnClick} isDropDownOpen={isDropDownOpen}/>                
+                <DropDown id ="t_dropdown_btn" columns={{columns,current:currentBoard.board.columns[currentTask.column]}} text="Status" className={` relative w-full flex flex-col gap-[.7rem]`}  onClick={handleOnClick} isDropDownOpen={isDropDownOpen}/>                
                 
         </div>
     )       
@@ -123,15 +130,17 @@ const SubTasks : FC<EventListeners & SubTasksProps> = ({subtasks,onClick}) =>{
         </div>
     )
 }
-function DropDownSelect() {
+function DropDownSelect({onClick}:EventListeners) {
     const theme = useKanbanState((state)=>state.theme);
     return (
         <div className={` ${classListExt("select",theme)} py-[1rem] absolute left-[100%] top-[3rem] translate w-[12rem] h-fit   z-10  text-right text-[1rem] flex flex-col items-start justify-items-start gap-[.5rem] rounded-[.5rem] font-[500]`}>
-            <button className={`  px-[1rem]  w-full  flex items-start text-grey hover:opacity-[50%] `}>
-                <p>Edit Board</p>
+            <button id="t_edit_task" className={`  px-[1rem]  w-full  flex items-start text-grey hover:opacity-[50%] `}
+            onClick={onClick}
+            >
+                <p>Edit Task</p>
             </button>
-            <button className={`  px-[1rem] w-full flex items-start text-red opacity-[90%] hover:opacity-[50%]`}>
-                <p>Delete Board</p>
+            <button  id="t_delete_task"className={`  px-[1rem] w-full flex items-start text-red opacity-[90%] hover:opacity-[50%]`}>
+                <p>Delete Task</p>
             </button> 
             
             

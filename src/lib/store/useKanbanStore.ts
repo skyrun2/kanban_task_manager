@@ -16,7 +16,8 @@ const defaultState : Omit<KanbanStore,'actions'> = {
     isSideBarOpen:true,
     boards:[],
     currentBoard:{id:0,board: {name:"",columns:[]} },
-    currentTask:{id:0,task: {title:"",description:"",status:"",subTasks:[]},column:0 }
+    currentTask:{id:0,task: {title:"",description:"",status:"",subTasks:[]},column:0 },
+    toDelete:undefined
 }
 export const useKanbanState = create<KanbanStore>()((set,get) =>({
     ...defaultState,
@@ -100,6 +101,7 @@ export const useKanbanState = create<KanbanStore>()((set,get) =>({
             set({
                 isSideBarOpen:true,
             })
-        }
+        },        
     }
+    
 })) 

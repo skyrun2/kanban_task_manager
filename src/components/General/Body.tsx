@@ -36,7 +36,9 @@ import TaskModal from "./TaskModal";
 const Body :FC  = () =>{
     const boards = useKanbanState((state)=>state.boards);
     const currentBoard = useKanbanState((state)=>state.currentBoard).board;
+    const currentBoardId = useKanbanState((state)=>state.currentBoard).id;
     const currentTask = useKanbanState((state)=>state.currentTask);
+    const setCurrentBoard = useKanbanState((state)=>state.actions.setCurrentBoard);
     const setCurrentTask = useKanbanState((state)=>state.actions.setCurrentTask);
     const setModalOpen = useKanbanState((state)=>state.actions.setModalOpen);
     const setSideBarOpen = useKanbanState((state)=>state.actions.setSideBarOpen);
@@ -60,9 +62,8 @@ const Body :FC  = () =>{
 
         
         switch (true) {
-            case id == "create_new_board" || id == "new_board":
-                console.log('1');
-                
+            case id == "create_new_board" || id == "new_board":                 
+                setCurrentBoard({id:currentBoardId,board:currentBoard});
                 setModalOpen(NewBoardModal);
                 break;            
             case id == "new_column":
@@ -78,9 +79,7 @@ const Body :FC  = () =>{
             case id == "hide":
                 setSideBarClose();
                 break;
-            case isTask.isTask:{
-                console.log(tasks[isTask.index]);
-                console.log();
+            case isTask.isTask:{                
                 let columnIndex = 0;
                 currentBoard.columns.forEach((e,i)=>{
                     if(e.tasks.includes(tasks[isTask.index])){
@@ -89,7 +88,7 @@ const Body :FC  = () =>{
                 })
                 
                 
-                setCurrentTask({id:isTask.index,task:tasks[isTask.index],column:columnIndex});
+                setCurrentTask({id:isTask.index,task:tasks[isTask.index],column:columnIndex,isEditing:true});
                 setModalOpen(TaskModal);
             }            
                 break;

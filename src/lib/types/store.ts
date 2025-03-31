@@ -103,23 +103,24 @@ export interface KanbanStore{
     isModalOpen:boolean;    
     isMiniModalOpen:boolean;
     isSideBarOpen:boolean;
-    currentBoard:{id:number,board:iBoard};
-    currentTask:{id:number,task:iTask,column:number};
+    currentBoard:{id:number,board:iBoard,isEditing?:boolean};
+    currentTask:{id:number,task:iTask,column:number,isEditing?:boolean};
     boards:iBoard[];
+    toDelete:{status:"task"|"board",id:number}|undefined
     actions:{
         editBoard: (board:{id:number,board:iBoard})=>void;
         setBoard: (board:iBoard)=>void;        
-        setCurrentBoard: (currentBoard: {id:number ,board:iBoard})=>void;
-        setCurrentTask: (currentTask: {id:number ,task:iTask,column:number})=>void;
+        setCurrentBoard: (currentBoard: {id:number ,board:iBoard,isEditing?:boolean})=>void;
+        setCurrentTask: (currentTask: {id:number,task:iTask,column:number,isEditing?:boolean})=>void;
         setDropDownOpen:() =>void;
         setDropDownClose:() =>void;
-        setTheme:()=> void;
+        setTheme:()=> void;    
         setModalOpen:(Modal:FC)=>void;
         setModalClose:()=>void;
         setMiniModalOpen:(miniModal:iMiniModal)=>void;
         setMiniModalClose:()=>void;
         setSideBarOpen:()=>void;
-        setSideBarClose:()=>void;        
+        setSideBarClose:()=>void;                
     }
 }
  

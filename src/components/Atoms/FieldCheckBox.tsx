@@ -27,19 +27,7 @@ const FieldCheckBox: FC<EventListeners&FieldCheckBoxProps> =({id,onClick,subtask
             </div>
             <p className={className} >{subtask.title}</p>
 
-        </label>
-        // <div className={`${classListExt("select",theme)}  p-[.75rem] w-full flex items-center gap-[.5rem] text-[.81rem] font-bold rounded-[1rem] cursor-pointer`}>
-        //     <div className="w-[.88rem] h-[.88rem] relative">
-        //         <input id="checkbox" className={` ${classListExt("select",theme)} w-[.88rem] h-[.88rem]  shrink-0  `} type="checkbox"
-        //         onClick={onClick} 
-        //         />
-        //         <span className=" checkmark "> </span>
-        //     </div>
-        //     <label htmlFor="checkbox" className=" grow bg-add">
-        //         {subtask.title}
-        //     </label>
-        // </div>
-
+        </label>        
     )
 }
 export default FieldCheckBox;

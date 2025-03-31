@@ -2,9 +2,11 @@ import { FC } from "react";
 import { OverlayProps } from "../../lib/types/store";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import TaskModal from "./TaskModal";
+import DeleteModal from "./DeleteModal";
 
 const Overlay : FC = ()=>{
     const setModalClose = useKanbanState((state)=>state.actions.setModalClose);
+    const setCurrentTask = useKanbanState((state)=>state.actions.setCurrentTask);
     const isModalOpen = useKanbanState((state)=>state.isModalOpen);
     const Modal = useKanbanState((state)=>state.Modal);
 
@@ -14,6 +16,7 @@ const Overlay : FC = ()=>{
         // setModalClose()
         
         if ( isModalOpen && id == "overlay"){
+            setCurrentTask({id:0,column:0,task:{title:"",description:"",status:"",subTasks:[]}});
             setModalClose()
         }
         
@@ -25,7 +28,7 @@ const Overlay : FC = ()=>{
             onClick={handleOnClick}
             >
                 {Modal? <Modal/> : null}
-                {/* <TaskModal/> */}
+                {/* <DeleteModal/> */}
             </div>
         </div>
     )

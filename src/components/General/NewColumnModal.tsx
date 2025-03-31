@@ -24,15 +24,14 @@ const  NewColumnModal : FC  = () => {
         
         switch (true) {
             case id == "nc_add_column":{
-                
-                
+                let isOkay = false                
                 let isRequired = false;
                 board.columns.map((e)=>{
                     if( !e.name.length) isRequired = true;
                 })
                 
-                
-                if(!isRequired) {
+                isOkay = !isRequired && !used.isUsed
+                if(isOkay) {
                     const updatedColumns:iColumn[] = [...board.columns,{name:"",tasks:[]}]
                     setBoard({name:board.name,columns:updatedColumns})
                 }

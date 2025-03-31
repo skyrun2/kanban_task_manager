@@ -8,12 +8,15 @@ import GeneralBtn from "../Atoms/GeneralBtn";
 
 import IconBtn from "../Atoms/IconBtn";
 import AddTaskModal from "./AddTaskModal";
-import { iClick } from "../../lib/types/store";
+import { EventListeners, iClick } from "../../lib/types/store";
+import NewBoardModal from "./NewBoardModal";
+import DeleteModal from "./DeleteModal";
 
 
 
 const Header: FC = () =>{
     const currentBoard = useKanbanState((state)=>state.currentBoard);
+    const setCurrentBoard = useKanbanState((state)=>state.actions.setCurrentBoard);
     const setModalOpen = useKanbanState((state)=>state.actions.setModalOpen);
     const setMiniModalOpen = useKanbanState((state)=>state.actions.setMiniModalOpen);
     const theme = useKanbanState((state)=>state.theme);
@@ -30,6 +33,15 @@ const Header: FC = () =>{
                 break;
             case id == "more_btn":
                 setMiniModalOpen("more");
+                break;
+            case id == "h_edit":
+                setCurrentBoard({id:currentBoard.id,board:currentBoard.board,isEditing:true});
+                setModalOpen(NewBoardModal);
+                console.log("q");
+                
+                break;
+            case id == "h_delete":
+                setModalOpen(DeleteModal);
                 break;
             default:
                 break;
@@ -62,7 +74,7 @@ const Header: FC = () =>{
                         <IconBtn id="more_btn" widthOrClass={{btnWidth:"1.2rem"}} iconWidth="100%" Icon={<More/>}  
                         onClick={handleOnClick}
                         hover= {{light:"#e4ebfa",dark:"#20212C"}}/>
-                        {miniModal == "more"?<DropDownSelect/>:null}
+                        {miniModal == "more"?<DropDownSelect onClick={handleOnClick}/>:null}
                         
                     </div> 
                 : null
@@ -73,14 +85,18 @@ const Header: FC = () =>{
 }
 
 
-function DropDownSelect() {
+function DropDownSelect({onClick}:EventListeners) {
     const theme = useKanbanState((state)=>state.theme);
     return (
-        <div className={` ${classListExt("select",theme)} py-[.6rem] absolute w-full h-fit top-[3.5rem] z-10  text-right text-[1rem] flex flex-col items-start justify-items-start gap-[.5rem] rounded-[.5rem] font-medium`}>
-            <button className={`  px-[1rem]  w-full  flex items-start text-grey hover:opacity-[50%] `}>
+        <div  className={` ${classListExt("select",theme)} py-[.6rem] absolute w-full h-fit top-[3.5rem] z-10  text-right text-[1rem] flex flex-col items-start justify-items-start gap-[.5rem] rounded-[.5rem] font-medium`}>
+            <button id="h_edit" className={`  px-[1rem]  w-full  flex items-start text-grey hover:opacity-[50%] `}
+            onClick={onClick}
+            >
                 <p>Edit Board</p>
             </button>
-            <button className={`  px-[1rem] w-full flex items-start text-red opacity-[90%] hover:opacity-[50%]`}>
+            <button id="h_delete" className={`  px-[1rem] w-full flex items-start text-red opacity-[90%] hover:opacity-[50%]`}
+            onClick={onClick}
+            >
                 <p>Delete Board</p>
             </button> 
             

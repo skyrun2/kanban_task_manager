@@ -11,31 +11,35 @@ import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
 
 const NewBoardModal:FC = () =>{
     const boards = useKanbanState((state)=>state.boards)
+    const currentBoard = useKanbanState((state)=>state.currentBoard);
+    const board = useKanbanState((state)=>state.currentBoard).board;
     const setBoards = useKanbanState((state)=>state.actions.setBoard);
+    const editBoard = useKanbanState((state)=>state.actions.editBoard);
     const setCurrentBoard = useKanbanState((state)=>state.actions.setCurrentBoard);
     const setModalClose = useKanbanState((state)=>state.actions.setModalClose);
     const theme = useKanbanState((state)=>state.theme);
-    const [columnsCount, setColumnsCount] = useState(0);
+    const [columnsCount, setColumnsCount] = useState(board.columns.length);
     const [columnKeyArr,setColumnKeyArr]= useState<{id:number,name:string,isDefault:boolean}[]>([{id:0,name:"",isDefault:true}]);    
-    const [ used, setUsed] = useState<{isUsed:boolean,index:number}>({isUsed:false,index:0});
+    const [ used, setUsed] = useState<{isUsed:boolean,index:number}>({isUsed:false,index:0});    
     const [ boardName, setBoardName] = useState<{isUsed:boolean,isRequired:boolean}>({isUsed:false,isRequired:false});
     const handleOnClick = (e:iClick) =>{
         const id : string = e.currentTarget.id;        
         e.preventDefault();                        
         
         switch (true) {
-            case id == "nb_add_column":
+            case id == "nb_add_column":{
                 if (columnKeyArr.length<6)  {
                     let required : boolean = false;
+                    let isOkay = false;
                     
                     const  updatedColumnArr = columnKeyArr;
                     columnKeyArr.forEach((e,i)=>{                                                                        
                         if(!e.name.length) required = true;
                         updatedColumnArr[i].isDefault = false;
                     })
+                    isOkay = !used.isUsed && !required
                     
-                    
-                    if( required){                        
+                    if( !isOkay){                        
                         setColumnKeyArr([...updatedColumnArr]);                    
                     }
                     else{
@@ -43,31 +47,50 @@ const NewBoardModal:FC = () =>{
                         setColumnKeyArr([...updatedColumnArr,{id:columnsCount+1,name:"",isDefault:true}]);
                     }
 
-                }                                
+                }                       
+            }         
                 break;     
             case id == "nb_save":{
-                const board_name = {...document.getElementById("nb_board_name") as HTMLInputElement}.value;
+                const board_name = {...document.getElementById("nb_board_name") as HTMLInputElement}.value.toLowerCase();
                 let required : boolean = false;                                 
                 const updatedColumnArr = columnKeyArr;                
                 let setBoardCondition = false;
+                let isUsed = false;
                 const newColumns : iColumn[] = columnKeyArr.map((e,i)=>{
                     const name = e.name.trim();
                     if (!e.name.length) required =true;
                     updatedColumnArr[i].isDefault = false;
                     return {name,tasks:[]}
                 })
-                
+
+                boards.forEach((e)=>{
+                    if(e.name.toLowerCase() == board_name) isUsed = true;
+                })
+                setBoardName({isUsed,isRequired:!board_name.length});
                 setColumnKeyArr([...updatedColumnArr]);
                 
-                
-                setBoardCondition = !required && !!board_name.length &&  !boardName.isUsed;
-                setBoardName({isUsed:boardName.isUsed,isRequired:!board_name.length});
+                if (currentBoard.isEditing) {
+                    setBoardCondition = !required && !!board_name.length &&  !boardName.isUsed;                    
+                }
+                else setBoardCondition = !required && !!board_name.length &&  !boardName.isUsed && !isUsed;                    
+
                 if (setBoardCondition){                                                 
                     const id = boards.length;
-                    const currentBoard : iBoard = {name:board_name,columns:newColumns};
-                    setBoards({name:board_name,columns:newColumns});
-                    setCurrentBoard({id,board:currentBoard}); 
+                    if(currentBoard.isEditing) {                        
+                        const updatedBoard = {name:board_name,columns:newColumns};
+                        editBoard({id:currentBoard.id,board:updatedBoard})
+                        setCurrentBoard({id:currentBoard.id,board:updatedBoard}); 
+                    }
+                    else{
+                        const currentBoard : iBoard = {name:board_name,columns:newColumns};
+                        setBoards({name:board_name,columns:newColumns});
+                        setCurrentBoard({id,board:currentBoard}); 
+
+                    }
+                    
+                        
                     setModalClose();
+                    
                 }
                 
 
@@ -97,53 +120,58 @@ const NewBoardModal:FC = () =>{
         
     }
     const handleOnBlur = (e:iBlur) =>{
-            const id = e.currentTarget.id.trim();
-            const index = Number(id.slice(-1));
-            
-            
-            switch (true) {
-                case id == "nb_"+String(index):{                                                        
+        const id = e.currentTarget.id.trim();
+        const index = Number(id.slice(-1));
+        
+        
+        switch (true) {
+            case id == "nb_"+String(index):{                                                        
+                const value = {...e.currentTarget as HTMLInputElement}.value.toLowerCase();
+                let isUsed = false;
+                let usedIndex = 0;
+                
+                columnKeyArr.forEach((e,i)=>{
+                    if(value == e.name.toLowerCase() && i !== index ){
+                        isUsed = true;
+                        usedIndex = i;
+                    }                    
+                });                                                
+                setUsed({isUsed,index:usedIndex});                                                                                
+            }                
+                break;
+                case id == "nb_board_name":{ 
                     const value = {...e.currentTarget as HTMLInputElement}.value.toLowerCase();
                     let isUsed = false;
-                    let usedIndex = 0;
                     
-                    columnKeyArr.forEach((e,i)=>{
+                    boards.forEach((e,i)=>{
                         if(value == e.name.toLowerCase() && i !== index ){
-                            isUsed = true;
-                            usedIndex = i;
-                        }                    
-                    });                                                
-                    setUsed({isUsed,index:usedIndex});                                                                                
-                }                
-                    break;
-                    case id == "nb_board_name":{ 
-                        const value = {...e.currentTarget as HTMLInputElement}.value.toLowerCase();
-                        let isUsed = false;
-                        
-                        boards.forEach((e,i)=>{
-                            if(value == e.name.toLowerCase() && i !== index ){
-                                isUsed = true;                                
-                            }
-                        })
-                        setBoardName({isUsed,isRequired:!value.length});
-                    }
-                    break;
-                default:
-                    break;
-            }
-    
+                            isUsed = true;                                
+                        }
+                    })
+                    setBoardName({isUsed,isRequired:!value.length});
+                }
+                break;
+            default:
+                break;
         }
+    
+    }
     useEffect(()=>{
-        
-        
-    },[columnKeyArr])
+        const updatedColumnArr: {id:number,name:string,isDefault:boolean}[] = [];
+        if (board.columns.length && currentBoard.isEditing) {
+            board.columns.forEach((e,i)=>{
+            updatedColumnArr.push({id:i,name:e.name,isDefault:true});
+            })
+            setColumnKeyArr([...updatedColumnArr]);
+        }
+    },[])
     return(
         <form className={`${classListExt("priModal",theme)} absolute top-[50%] left-[50%] p-[2rem] pb-[3rem] ab_center w-[30rem] min-h-[23rem]
         rounded-[.5rem] text-[0.75rem] font-bold
            flex flex-col gap-[1rem]       
         `}>
            <h1 className=" text-[1.1rem]">Add new Board</h1>
-            <Field  text="Name" Input={<FieldInput  onBlur={handleOnBlur} status={boardName.isUsed? "Used" : boardName.isRequired? "Required":"" } id="nb_board_name"/>} />
+            <Field  text="Name" Input={<FieldInput  onBlur={handleOnBlur} status={boardName.isUsed? "Used" : boardName.isRequired? "Required":"" } value={currentBoard.isEditing?board.name:""} id="nb_board_name"/>} />
             <div className="w-full flex flex-col gap-[.7rem]">
                 <p>Columns</p>
             
