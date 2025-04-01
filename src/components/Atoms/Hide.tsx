@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { IconHideSidebar } from "../Icons";
+import { IconHideSidebar } from "../Icons/index";
 import { iClick } from "../../lib/types/store";
 
 const Hide: FC<{onClick?:(e:iClick)=>void}> = ({onClick}) =>{

@@ -8,7 +8,7 @@ import IconBtn from "../Atoms/IconBtn";
 import DropDown from "../Atoms/DropDown";
 
 import classListExt from "../../utils/classListExt";
-import { More } from "../Icons";
+import { More } from "../Icons/index";
 import FieldCheckBox from "../Atoms/FieldCheckBox";
 import AddTaskModal from "./AddTaskModal";
 

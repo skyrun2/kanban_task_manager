@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 
-import { AddTask, DarkTheme, IconBoard, LightTheme, Show } from "../Icons";
+import { AddTask, DarkTheme, IconBoard, LightTheme, Show } from "../Icons/index";
 import Hide from "../Atoms/Hide";
 import GeneralBtn from "../Atoms/GeneralBtn";
 import { CreateNewBoardProps, EventListeners, iBoard, iClick, iColumn, iTask } from "../../lib/types/store";

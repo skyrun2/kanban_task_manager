@@ -4,7 +4,7 @@ import { useKanbanState } from "../../lib/store/useKanbanStore";
 import Field from "./Field";
 import FieldInput from "../Atoms/FieldInputs";
 import GeneralBtn from "../Atoms/GeneralBtn";
-import { IconCross } from "../Icons";
+import { IconCross } from "../Icons/index";
 import IconBtn from "../Atoms/IconBtn";
 import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
 

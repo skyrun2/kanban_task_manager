@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 
 import classListExt from "../../utils/classListExt";
-import { More } from "../Icons";
+import { More } from "../Icons/index";
 
 const MoreBtn: FC = () =>{
     const theme = useKanbanState((state)=>state.theme);
