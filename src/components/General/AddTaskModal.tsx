@@ -2,10 +2,10 @@ import { FC, useEffect, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 import GeneralBtn from "../Atoms/GeneralBtn";
-import { IconCross } from "../Icons";
+// import { IconCross } from "../Icons";
 import Field from "./Field";
 import FieldInput from "../Atoms/FieldInputs";
-import IconBtn from "../Atoms/IconBtn";
+// import IconBtn from "../Atoms/IconBtn";
 
 import FieldTextarea from "../Atoms/FieldTextArea";
 import DropDown from "../Atoms/DropDown";
@@ -252,7 +252,13 @@ const SubTasks : FC<EventListeners & SubTasksProps> = ({onChange,onBlur,subtasks
 
                     return(
                         <Field key={i}  Input={<FieldInput id={"na_"+String(i)} onBlur={onBlur} onChange={onChange}  status={status} value={e.name} width={count>1?"24rem":null}/>} 
-                        Icon={count>1?<IconBtn id="" widthOrClass={{btnWidth:"1rem"}} iconWidth="full" Icon={<IconCross/>}/>:null }/>                     
+                        // Icon={count>1?<IconBtn id="" widthOrClass={{btnWidth:"1rem"}} iconWidth="full" 
+                        // Icon={
+                        
+                        // <IconCross/>}
+                        
+                        // />:null }
+                        />                     
                     )
                 })
             }      

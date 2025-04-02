@@ -3,8 +3,8 @@ import classListExt from "../../utils/classListExt";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import Field from "./Field";
 import FieldInput from "../Atoms/FieldInputs";
-import { IconCross } from "../Icons/index";
-import IconBtn from "../Atoms/IconBtn";
+// import { IconCross } from "../Icons/index";
+// import IconBtn from "../Atoms/IconBtn";
 import GeneralBtn from "../Atoms/GeneralBtn";
 import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
 
@@ -144,14 +144,14 @@ interface ColumnFieldProps {
 
     
 }
-const ColumnField:FC<ColumnFieldProps> = ({onBlur,onClick,onChange,currentBoard, used}) =>{
+const ColumnField:FC<ColumnFieldProps> = ({onBlur,onChange,currentBoard, used}) =>{
     
     return(
         <div className=" w-full flex flex-col gap-[.7rem] ">
             {currentBoard.columns.map((e,i)=>{
 
                 let status = ""
-                const isDisabled = !!e.tasks.length;
+                // const isDisabled = !!e.tasks.length;
                 
                 if (used?.isUsed && used.index == i) status = "Used";
                 if ( !e.name.length) status = "Required";
@@ -159,7 +159,7 @@ const ColumnField:FC<ColumnFieldProps> = ({onBlur,onClick,onChange,currentBoard,
                 
                 return(
                     <Field key={i} Input={<FieldInput id={"nc_"+String(i)} onChange={onChange} onBlur={onBlur} status={status} width={"24rem"} value={e.name} />}
-                    Icon={<IconBtn disabled={isDisabled} onClick={onClick}  id={"nc_icon_"+String(i)} widthOrClass={{btnWidth:"1rem"}} iconWidth="full" Icon={<IconCross/>} />} 
+                    // Icon={<IconBtn disabled={isDisabled} onClick={onClick}  id={"nc_icon_"+String(i)} widthOrClass={{btnWidth:"1rem"}} iconWidth="full" Icon={<IconCross/>} />} 
                     
                         />
                 )

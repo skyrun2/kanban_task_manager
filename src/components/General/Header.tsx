@@ -3,10 +3,10 @@ import { FC } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 
 import classListExt from "../../utils/classListExt";
-import { LogoDark, LogoLight, More } from "../Icons/index";
+// import { LogoDark, LogoLight, More } from "../Icons/index";
 import GeneralBtn from "../Atoms/GeneralBtn";
 
-import IconBtn from "../Atoms/IconBtn";
+// import IconBtn from "../Atoms/IconBtn";
 import AddTaskModal from "./AddTaskModal";
 import { EventListeners, iClick } from "../../lib/types/store";
 import NewBoardModal from "./NewBoardModal";
@@ -60,7 +60,7 @@ const Header: FC = () =>{
         >
             <div id="logo" className={` ${classListExt("logo",theme)} pl-[2rem] w-left h-full flex items-center border-r  cursor-pointer ` } >
                 <div className=" h-[1.63rem]">
-                    {theme == "dark" ? <LogoLight /> : <LogoDark/>}          
+                    {/* {theme == "dark" ? <LogoLight /> : <LogoDark/>}           */}
                 </div>
                 
             </div>
@@ -71,9 +71,9 @@ const Header: FC = () =>{
                         <GeneralBtn id="add_task" text={"Add new task"} add={true}
                         onClick={handleOnClick}
                         className={` w-fit bg-add hover:bg-addHover text-light text-[0.94rem] font-bold rounded-[2rem]`}  />
-                        <IconBtn id="more_btn" widthOrClass={{btnWidth:"1.2rem"}} iconWidth="100%" Icon={<More/>}  
+                        {/* <IconBtn id="more_btn" widthOrClass={{btnWidth:"1.2rem"}} iconWidth="100%" Icon={<More/>}  
                         onClick={handleOnClick}
-                        hover= {{light:"#e4ebfa",dark:"#20212C"}}/>
+                        hover= {{light:"#e4ebfa",dark:"#20212C"}}/> */}
                         {miniModal == "more"?<DropDownSelect onClick={handleOnClick}/>:null}
                         
                     </div> 
