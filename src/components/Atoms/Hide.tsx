@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { IconHideSidebar } from "../Icons/index";
+import { IconHideSidebar } from "../Svgs/index";
 import { iClick } from "../../lib/types/store";
 
 

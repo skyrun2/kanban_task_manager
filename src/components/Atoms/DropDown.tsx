@@ -1,7 +1,7 @@
 import { FC } from "react";   
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
-import  {ArrowDown}  from "../Icons";
+import  {ArrowDown}  from "../Svgs";
 
 import { DropDownProps, EventListeners, iColumn } from "../../lib/types/store";
 

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 
 import classListExt from "../../utils/classListExt";
-import { More } from "../Icons/index";
+import { More } from "../Svgs/index";
 
 
 const MoreBtn: FC = () =>{

@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 import GeneralBtn from "../Atoms/GeneralBtn";
-import { IconCross } from "../Icons/index";
+import { IconCross } from "../Svgs/index";
 import Field from "./Field";
 import FieldInput from "../Atoms/FieldInputs";
 import IconBtn from "../Atoms/IconBtn";

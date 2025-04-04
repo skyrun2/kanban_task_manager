@@ -1,6 +1,6 @@
 
 import { FC } from "react";
-import { AddTask } from "../Icons/index";
+import { AddTask } from "../Svgs/index";
 import { GeneralBtnProps } from "../../lib/types/store";
 
 
