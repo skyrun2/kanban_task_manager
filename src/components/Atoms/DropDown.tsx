@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { DropDownProps, EventListeners, iColumn } from "../../lib/types/store";
-// import  {ArrowDown}  from "../../components/Icons";
+import  {ArrowDown}  from "../../components/Icons/index.ts";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 
@@ -15,7 +15,7 @@ const DropDown: FC<EventListeners & DropDownProps> = ({id,text,className,isDropD
             onClick={onClick}
             >
                 <p>{columns.current.name}</p>
-                {/* <ArrowDown className="w-[.7rem] h-[1.5rem]"/> */}
+                <ArrowDown className="w-[.7rem] h-[1.5rem]"/>
             </button>
             {isDropDownOpen? <DropDownSelect columns={columns.columns} onClick={onClick}/> : null}
         </div>
