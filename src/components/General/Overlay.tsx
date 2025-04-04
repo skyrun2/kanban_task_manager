@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
+import { useKanbanState } from "../../lib/store/useKanbanStore";
 
 
 

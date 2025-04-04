@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
+import { useKanbanState } from "../../lib/store/useKanbanStore";
 
-import classListExt from "../../utils/classListExt.ts";
-import { More } from "../Icons/index.ts";
+import classListExt from "../../utils/classListExt";
+import { More } from "../Icons/index";
 
 
 const MoreBtn: FC = () =>{

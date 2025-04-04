@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
-import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
-import { IconBtnProps, iTheme } from "../../lib/types/store.ts";
+import { useKanbanState } from "../../lib/store/useKanbanStore";
+import { IconBtnProps, iTheme } from "../../lib/types/store";
 
 
 const IconBtn : FC<IconBtnProps> = ({id,Icon,iconHeight,iconWidth,hover,widthOrClass,onClick,disabled}) =>{

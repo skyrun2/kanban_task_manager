@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from "react";
-import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
-import classListExt from "../../utils/classListExt.ts";
+import { useKanbanState } from "../../lib/store/useKanbanStore";
+import classListExt from "../../utils/classListExt";
 import GeneralBtn from "../Atoms/GeneralBtn.tsx";
-import { IconCross } from "../Icons/index.ts";
+import { IconCross } from "../Icons/index";
 import Field from "./Field.tsx";
 import FieldInput from "../Atoms/FieldInputs.tsx";
 import IconBtn from "../Atoms/IconBtn.tsx";
 
 import FieldTextarea from "../Atoms/FieldTextArea.tsx";
 import DropDown from "../Atoms/DropDown.tsx";
-import { EventListeners, iBlur, iChange, iClick,iSubtasks, iTask } from "../../lib/types/store.ts";
+import { EventListeners, iBlur, iChange, iClick,iSubtasks, iTask } from "../../lib/types/store";
 
 
 const  AddTaskModal : FC = () =>{
@@ -219,6 +219,7 @@ const  AddTaskModal : FC = () =>{
             setTaskName({isUsed:taskName.isUsed,isRequired:false,status:"",name:task.title});   
         }
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     
     return(

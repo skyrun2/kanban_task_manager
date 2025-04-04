@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { EventListeners, iSubtasks } from "../../lib/types/store.ts";
-import classListExt from "../../utils/classListExt.ts";
-import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
+import { EventListeners, iSubtasks } from "../../lib/types/store";
+import classListExt from "../../utils/classListExt";
+import { useKanbanState } from "../../lib/store/useKanbanStore";
 interface FieldCheckBoxProps{
     id?:string;
     subtask:iSubtasks;

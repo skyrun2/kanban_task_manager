@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
-import classListExt from "../../utils/classListExt.ts";
-import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
+import classListExt from "../../utils/classListExt";
+import { useKanbanState } from "../../lib/store/useKanbanStore";
 import Field from "./Field.tsx";
 import FieldInput from "../Atoms/FieldInputs.tsx";
 import GeneralBtn from "../Atoms/GeneralBtn.tsx";
-import { IconCross } from "../Icons/index.ts";
+import { IconCross } from "../Icons/index";
 import IconBtn from "../Atoms/IconBtn.tsx";
-import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store.ts";
+import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
 
 
 
@@ -165,6 +165,7 @@ const NewBoardModal:FC = () =>{
             })
             setColumnKeyArr([...updatedColumnArr]);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     return(
         <form className={`${classListExt("priModal",theme)} absolute top-[50%] left-[50%] p-[2rem] pb-[3rem] ab_center w-[30rem] min-h-[23rem]

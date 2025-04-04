@@ -1,4 +1,4 @@
-import { iClassList, iTheme } from "../lib/types/store.ts";
+import { iClassList, iTheme } from "../lib/types/store";
 
 function classListExt(element:string,theme:iTheme) {    
     const classList : iClassList = {
