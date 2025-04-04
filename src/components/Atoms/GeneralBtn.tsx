@@ -1,6 +1,6 @@
 
 import { FC } from "react";
-// import { AddTask } from "../Icons/index";
+import { AddTask } from "../Icons/index.ts";
 import { GeneralBtnProps } from "../../lib/types/store";
 
 const GeneralBtn: FC<GeneralBtnProps> = ({id,text,add,className,onClick}) =>{
@@ -15,7 +15,7 @@ const GeneralBtn: FC<GeneralBtnProps> = ({id,text,add,className,onClick}) =>{
               >
                 {add?
                     <span className="w-[.5rem] aspect-square shrink-0">
-                        {/* <AddTask/> */}
+                        <AddTask/>
                     </span>
                     : null    
                 }                

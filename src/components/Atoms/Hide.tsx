@@ -1,5 +1,5 @@
 import { FC } from "react";
-// import { IconHideSidebar } from "../Icons/index";
+import { IconHideSidebar } from "../Icons/index.ts";
 import { iClick } from "../../lib/types/store";
 
 const Hide: FC<{onClick?:(e:iClick)=>void}> = ({onClick}) =>{
@@ -9,7 +9,7 @@ const Hide: FC<{onClick?:(e:iClick)=>void}> = ({onClick}) =>{
             onClick={onClick}
             >
                 <span className="h-[1rem] aspect-square">
-                    {/* <IconHideSidebar/> */}
+                    <IconHideSidebar/>
                 </span>
                 <p>Hide sidebar</p>
             </button>

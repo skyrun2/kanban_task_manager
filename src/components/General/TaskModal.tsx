@@ -3,12 +3,12 @@ import { useKanbanState } from "../../lib/store/useKanbanStore";
 import { EventListeners, iClick, iSubtasks } from "../../lib/types/store";
 import Field from "./Field";
 
-// import IconBtn from "../Atoms/IconBtn";
+import IconBtn from "../Atoms/IconBtn";
 
 import DropDown from "../Atoms/DropDown";
 
 import classListExt from "../../utils/classListExt";
-// import { More } from "../Icons/index";
+import { More } from "../Icons/index";
 import FieldCheckBox from "../Atoms/FieldCheckBox";
 import AddTaskModal from "./AddTaskModal";
 
@@ -98,10 +98,10 @@ const  TaskModal : FC = () =>{
                 <div className="w-full flex items-center justify-between  ">
                     <h1 className="text-[1.125rem]">{currentTask.task.title}</h1>
                     <div className=" relative w-fit ">
-                        {/* <IconBtn id="more_btn" widthOrClass={{btnWidth:"1.2rem"}} iconWidth="100%" iconHeight="2rem" Icon={<More/>}
+                        <IconBtn id="more_btn" widthOrClass={{btnWidth:"1.2rem"}} iconWidth="100%" iconHeight="2rem" Icon={<More/>}
                             onClick={handleOnClick}
                             hover= {{light:"#e4ebfa",dark:"#20212C"}}
-                        /> */}
+                        />
                         <DropDownSelect onClick={handleOnClick}/>
                     </div>
                         

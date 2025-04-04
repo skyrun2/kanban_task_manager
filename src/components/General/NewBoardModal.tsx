@@ -4,8 +4,8 @@ import { useKanbanState } from "../../lib/store/useKanbanStore";
 import Field from "./Field";
 import FieldInput from "../Atoms/FieldInputs";
 import GeneralBtn from "../Atoms/GeneralBtn";
-// import { IconCross } from "../Icons/index";
-// import IconBtn from "../Atoms/IconBtn";
+import { IconCross } from "../Icons/index";
+import IconBtn from "../Atoms/IconBtn";
 import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
 
 
@@ -192,7 +192,7 @@ interface ColumnFieldProps {
     required?:boolean;
     used?: {isUsed:boolean,index:number};
 }
-const ColumnField:FC<ColumnFieldProps> = ({onBlur,onChange,columnArr,used}) =>{
+const ColumnField:FC<ColumnFieldProps> = ({onBlur,onClick,onChange,columnArr,used}) =>{
     const columnsCount = columnArr.length;
     
     
@@ -206,9 +206,9 @@ const ColumnField:FC<ColumnFieldProps> = ({onBlur,onChange,columnArr,used}) =>{
                 
                 return(
                     <Field key={e.id} Input={<FieldInput id={"nb_"+String(e.id)} onBlur={onBlur} onChange={onChange} value={e.name}  status={status} width={columnsCount>1?  "24rem":null}/>}
-                    // Icon={columnsCount>1? 
-                    // <IconBtn onClick={onClick}  id={String(e.id)} widthOrClass={{btnWidth:"1rem"}} iconWidth="full" 
-                    // Icon={<IconCross/>} />:null} 
+                    Icon={columnsCount>1? 
+                    <IconBtn onClick={onClick}  id={String(e.id)} widthOrClass={{btnWidth:"1rem"}} iconWidth="full" 
+                    Icon={<IconCross/>} />:null} 
                     
                         />
                 )

@@ -2,13 +2,13 @@ import { FC } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 
-// import { AddTask, DarkTheme, IconBoard, LightTheme, Show } from "../Icons/index";
+import { AddTask, DarkTheme, IconBoard, LightTheme, Show } from "../Icons/index.ts";
 import Hide from "../Atoms/Hide";
 import GeneralBtn from "../Atoms/GeneralBtn";
 import { CreateNewBoardProps, EventListeners, iBoard, iClick, iColumn, iTask } from "../../lib/types/store";
 import NewBoardModal from "./NewBoardModal";
 import NewColumnModal from "./NewColumnModal";
-// import IconBtn from "../Atoms/IconBtn";
+import IconBtn from "../Atoms/IconBtn";
 import TaskModal from "./TaskModal";
 
 
@@ -118,7 +118,7 @@ const  SideBar: FC<SideBarProps> = ({onclick}) => {
     const boards = useKanbanState((state)=>state.boards);    
     const isSideBarOpen = useKanbanState((state)=>state.isSideBarOpen);
     const theme = useKanbanState((state)=>state.theme);
-    // const className = " absolute  bottom-[5%] w-[3rem] h-[3.2rem] bg-add hover:bg-addHover rounded-l-[0rem] rounded-r-[2rem]"
+    const className = " absolute  bottom-[5%] w-[3rem] h-[3.2rem] bg-add hover:bg-addHover rounded-l-[0rem] rounded-r-[2rem]"
     
     return(
         <>
@@ -133,7 +133,7 @@ const  SideBar: FC<SideBarProps> = ({onclick}) => {
                     <div id="side_features" className=" pl-sideBarLeft w-full flex flex-col ">            
                         <div id="theme_control" className={` ${classListExt("theme",theme)} w-[13.5rem] h-[3rem] flex items-center justify-around rounded-[.5rem]`}>
                             <div className=" w-[1rem] aspect-square">
-                                {/* <DarkTheme/> */}
+                                <DarkTheme/>
                             </div>
                             <div id="theme_btn_ctrl" className=" w-[3rem] h-[1.2rem]">
                                 <button id="theme_btn" className=" relative w-full h-full bg-add rounded-[1rem]"
@@ -143,15 +143,14 @@ const  SideBar: FC<SideBarProps> = ({onclick}) => {
                                 </button>
                             </div>
                             <div className=" w-[1.3rem] aspect-square">
-                                {/* <LightTheme/> */}
+                                <LightTheme/>
                             </div>
                         </div>
                         <Hide onClick={onclick}/>
                     </div>   
                 </div>
-            :
-            null
-            // <IconBtn id="show" onClick={onclick} widthOrClass={{className}} iconWidth="full" Icon={<Show className="w-[1.1rem] aspect-square" />}/>
+            :            
+            <IconBtn id="show" onClick={onclick} widthOrClass={{className}} iconWidth="full" Icon={<Show className="w-[1.1rem] aspect-square" />}/>
             }
         </>
     )
@@ -222,7 +221,7 @@ const  DisplayBoards: FC<DisplayBoardsProps> =  ({boards,onclick}) =>{
             <div className=" pl-sideBarLeft hover:bg-addHover hover:text-light w-[92%] h-[3rem] rounded-r-[2rem]">
                 <button id={name} className=" w-full h-full flex items-center gap-[.5rem] font-bold text-[1rem]">
                     <span className="w-[1rem] aspect-square">
-                        {/* <IconBoard className="text-grey"/> */}
+                        <IconBoard className="text-grey"/>
                     </span>
                     <p>{name}</p>
                 </button>                                        
@@ -275,7 +274,7 @@ const  CreateColumn: FC<{onclick?:(e:iClick)=>void}> = ({onclick}) => {
             >
                 <div className="  h-[2rem] flex items-baseline justify-center  gap-[0.2rem] text-[1.5rem] font-bold ">
                     <div className="w-[.7rem] aspect-square flex justify-baseline items-end ">
-                        {/* <AddTask/> */}
+                        <AddTask/>
                     </div>
                     <span>Add New Column</span>
                 </div>
@@ -295,11 +294,11 @@ const  CreateNewBoard : FC<CreateNewBoardProps> = ({onClick}) => {
             onClick={onClick}
             >
                 <span className="w-[1rem] aspect-square shrink-0">
-                {/* <IconBoard/> */}
+                <IconBoard/>
                 </span>
                 <span id="text_board_name_span" className=" w-[100%] h-full flex items-center gap-[.4rem] ">
                     <span className=" mt-[.1rem] w-[.5rem] aspect-square">
-                       {/* <AddTask/>  */}
+                       <AddTask/> 
                     </span>
                     <p> Create New Board</p>
                 </span>
