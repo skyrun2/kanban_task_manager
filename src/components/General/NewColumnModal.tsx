@@ -7,6 +7,7 @@ import { IconCross } from "../Icons/index";
 import IconBtn from "../Atoms/IconBtn";
 import GeneralBtn from "../Atoms/GeneralBtn";
 import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
+import React from "react";
 
 const  NewColumnModal : FC  = () => {
     const theme = useKanbanState((state)=>state.theme);

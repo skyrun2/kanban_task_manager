@@ -2,6 +2,7 @@ import { FC } from "react";
 import { EventListeners, iSubtasks } from "../../lib/types/store";
 import classListExt from "../../utils/classListExt";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
+import React from "react";
 interface FieldCheckBoxProps{
     id?:string;
     subtask:iSubtasks;

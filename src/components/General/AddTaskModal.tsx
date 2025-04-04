@@ -10,6 +10,7 @@ import IconBtn from "../Atoms/IconBtn";
 import FieldTextarea from "../Atoms/FieldTextArea";
 import DropDown from "../Atoms/DropDown";
 import { EventListeners, iBlur, iChange, iClick,iSubtasks, iTask } from "../../lib/types/store";
+import React from "react";
 
 const  AddTaskModal : FC = () =>{
     const editBoard = useKanbanState((state)=>state.actions.editBoard);

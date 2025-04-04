@@ -1,4 +1,4 @@
-import assetsData from "./assetsData";
+import assetsData from "./assetsData.ts";
 
 
  export function colorTheme (  theme : "light"|"dark") {

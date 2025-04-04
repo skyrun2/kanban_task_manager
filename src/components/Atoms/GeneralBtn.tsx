@@ -2,6 +2,7 @@
 import { FC } from "react";
 import { AddTask } from "../Icons/index.ts";
 import { GeneralBtnProps } from "../../lib/types/store";
+import React from "react";
 
 const GeneralBtn: FC<GeneralBtnProps> = ({id,text,add,className,onClick}) =>{
     

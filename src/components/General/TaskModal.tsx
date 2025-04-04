@@ -11,6 +11,7 @@ import classListExt from "../../utils/classListExt";
 import { More } from "../Icons/index";
 import FieldCheckBox from "../Atoms/FieldCheckBox";
 import AddTaskModal from "./AddTaskModal";
+import React from "react";
 
 const  TaskModal : FC = () =>{
     const editBoard = useKanbanState((state)=>state.actions.editBoard);

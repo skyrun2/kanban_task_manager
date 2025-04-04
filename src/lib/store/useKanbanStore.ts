@@ -1,6 +1,6 @@
 import {create} from  'zustand';
-import {iBoard, iTheme, KanbanStore} from '../types/store' 
-import colorTheme from '../../utils/colorScheme';
+import {iBoard, iTheme, KanbanStore} from '../types/store.ts' 
+import colorTheme from '../../utils/colorScheme.ts';
 const darkTheme = colorTheme("dark");
 const defaultState : Omit<KanbanStore,'actions'> = {
     theme:"dark",    

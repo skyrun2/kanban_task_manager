@@ -10,6 +10,7 @@ import NewBoardModal from "./NewBoardModal";
 import NewColumnModal from "./NewColumnModal";
 import IconBtn from "../Atoms/IconBtn";
 import TaskModal from "./TaskModal";
+import React from "react";
 
 
  interface ColumnProps {

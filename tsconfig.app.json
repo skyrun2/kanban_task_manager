@@ -4,11 +4,15 @@
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
+    "module": "Node16",
     "skipLibCheck": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["src/*"]
+    },
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "node16",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -20,13 +24,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    /* 📌 Add these two */
-    "baseUrl": "./src",
-    "paths": {
-      "@components/*": ["components/*"]
-    }
+    "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules", ".vscode"]
+
 }

@@ -7,6 +7,7 @@ import GeneralBtn from "../Atoms/GeneralBtn";
 import { IconCross } from "../Icons/index";
 import IconBtn from "../Atoms/IconBtn";
 import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
+import React from "react";
 
 
 const NewBoardModal:FC = () =>{

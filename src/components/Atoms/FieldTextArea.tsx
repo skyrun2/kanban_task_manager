@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { InputProps } from "../../lib/types/store";
+import React from "react";
 
 const FieldTextarea: FC<InputProps> = ({id})=>{
     return(
