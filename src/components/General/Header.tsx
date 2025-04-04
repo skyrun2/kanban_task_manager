@@ -1,17 +1,17 @@
 
 import { FC } from "react";
-import { useKanbanState } from "../../lib/store/useKanbanStore";
+import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
 
-import classListExt from "../../utils/classListExt";
+import classListExt from "../../utils/classListExt.ts";
 import { LogoDark, LogoLight, More } from "../Icons/index.ts";
-import GeneralBtn from "../Atoms/GeneralBtn";
+import GeneralBtn from "../Atoms/GeneralBtn.tsx";
 
-import IconBtn from "../Atoms/IconBtn";
-import AddTaskModal from "./AddTaskModal";
-import { EventListeners, iClick } from "../../lib/types/store";
-import NewBoardModal from "./NewBoardModal";
-import DeleteModal from "./DeleteModal";
-import React from "react";
+import IconBtn from "../Atoms/IconBtn.tsx";
+import AddTaskModal from "./AddTaskModal.tsx";
+import { EventListeners, iClick } from "../../lib/types/store.ts";
+import NewBoardModal from "./NewBoardModal.tsx";
+import DeleteModal from "./DeleteModal.tsx";
+
 
 
 

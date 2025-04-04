@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useKanbanState } from "../../lib/store/useKanbanStore";
-import React from "react";
+import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
+
 
 
 const Overlay : FC = ()=>{

@@ -1,11 +1,11 @@
 
 
 import './App.css'
-import Body from './components/General/Body'
-import Header from './components/General/Header'
-import Overlay from './components/General/Overlay'
-import { useKanbanState } from './lib/store/useKanbanStore'
-import { iClick } from './lib/types/store'
+import Body from './components/General/Body.tsx'
+import Header from './components/General/Header.tsx'
+import Overlay from './components/General/Overlay.tsx'
+import { useKanbanState } from './lib/store/useKanbanStore.ts'
+import { iClick } from './lib/types/store.ts'
 
 
 function App() {

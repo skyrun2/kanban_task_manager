@@ -1,6 +1,5 @@
 import { FC } from "react";
-import { InputProps } from "../../lib/types/store";
-import React from "react";
+import { InputProps } from "../../lib/types/store.ts";
 
 const FieldInput : FC<InputProps> = ({id,width,value,disabled,onChange,onClick,onBlur,status}) =>{
     const style = {

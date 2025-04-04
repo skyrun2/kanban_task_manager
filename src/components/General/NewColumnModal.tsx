@@ -1,13 +1,13 @@
     import { FC, useState } from "react";
-import classListExt from "../../utils/classListExt";
-import { useKanbanState } from "../../lib/store/useKanbanStore";
-import Field from "./Field";
-import FieldInput from "../Atoms/FieldInputs";
-import { IconCross } from "../Icons/index";
-import IconBtn from "../Atoms/IconBtn";
-import GeneralBtn from "../Atoms/GeneralBtn";
-import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
-import React from "react";
+import classListExt from "../../utils/classListExt.ts";
+import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
+import Field from "./Field.tsx";
+import FieldInput from "../Atoms/FieldInputs.tsx";
+import { IconCross } from "../Icons/index.ts";
+import IconBtn from "../Atoms/IconBtn.tsx";
+import GeneralBtn from "../Atoms/GeneralBtn.tsx";
+import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store.ts";
+
 
 const  NewColumnModal : FC  = () => {
     const theme = useKanbanState((state)=>state.theme);

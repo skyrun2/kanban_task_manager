@@ -1,11 +1,9 @@
 import { FC } from "react";   
+import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
+import classListExt from "../../utils/classListExt.ts";
+import { ArrowDown } from "../Icons/index.ts";
 
-
-import { useKanbanState } from "../../lib/store/useKanbanStore";
-import classListExt from "../../utils/classListExt";
-import { ArrowDown } from "../Icons";
-import React from "react";
-import { DropDownProps, EventListeners, iColumn } from "../../lib/types/store";
+import { DropDownProps, EventListeners, iColumn } from "../../lib/types/store.ts";
 
 
 const DropDown: FC<EventListeners & DropDownProps> = ({id,text,className,isDropDownOpen,onClick,columns}) =>{

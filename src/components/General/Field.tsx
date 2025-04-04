@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
-import { FieldProps } from "../../lib/types/store";
-import React from "react";
+import { FieldProps } from "../../lib/types/store.ts";
+
 
 
 const Field : FC<FieldProps> = ({text,Input,Icon}) =>{

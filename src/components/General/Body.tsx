@@ -1,16 +1,16 @@
 import { FC } from "react";
-import { useKanbanState } from "../../lib/store/useKanbanStore";
-import classListExt from "../../utils/classListExt";
+import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
+import classListExt from "../../utils/classListExt.ts";
 
 import { AddTask, DarkTheme, IconBoard, LightTheme, Show } from "../Icons/index.ts";
-import Hide from "../Atoms/Hide";
-import GeneralBtn from "../Atoms/GeneralBtn";
-import { CreateNewBoardProps, EventListeners, iBoard, iClick, iColumn, iTask } from "../../lib/types/store";
-import NewBoardModal from "./NewBoardModal";
-import NewColumnModal from "./NewColumnModal";
-import IconBtn from "../Atoms/IconBtn";
-import TaskModal from "./TaskModal";
-import React from "react";
+import Hide from "../Atoms/Hide.tsx";
+import GeneralBtn from "../Atoms/GeneralBtn.tsx";
+import { CreateNewBoardProps, EventListeners, iBoard, iClick, iColumn, iTask } from "../../lib/types/store.ts";
+import NewBoardModal from "./NewBoardModal.tsx";
+import NewColumnModal from "./NewColumnModal.tsx";
+import IconBtn from "../Atoms/IconBtn.tsx";
+import TaskModal from "./TaskModal.tsx";
+
 
 
  interface ColumnProps {

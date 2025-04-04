@@ -1,17 +1,17 @@
 import { FC, useState } from "react";
-import { useKanbanState } from "../../lib/store/useKanbanStore";
-import { EventListeners, iClick, iSubtasks } from "../../lib/types/store";
-import Field from "./Field";
+import { useKanbanState } from "../../lib/store/useKanbanStore.ts";
+import { EventListeners, iClick, iSubtasks } from "../../lib/types/store.ts";
+import Field from "./Field.tsx";
 
-import IconBtn from "../Atoms/IconBtn";
+import IconBtn from "../Atoms/IconBtn.tsx";
 
-import DropDown from "../Atoms/DropDown";
+import DropDown from "../Atoms/DropDown.tsx";
 
-import classListExt from "../../utils/classListExt";
-import { More } from "../Icons/index";
-import FieldCheckBox from "../Atoms/FieldCheckBox";
-import AddTaskModal from "./AddTaskModal";
-import React from "react";
+import classListExt from "../../utils/classListExt.ts";
+import { More } from "../Icons/index.ts";
+import FieldCheckBox from "../Atoms/FieldCheckBox.tsx";
+import AddTaskModal from "./AddTaskModal.tsx";
+
 
 const  TaskModal : FC = () =>{
     const editBoard = useKanbanState((state)=>state.actions.editBoard);
