@@ -1,11 +1,11 @@
     import { FC, useState } from "react";
 import classListExt from "../../utils/classListExt";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
-import Field from "./Field.tsx";
-import FieldInput from "../Atoms/FieldInputs.tsx";
+import Field from "./Field";
+import FieldInput from "../Atoms/FieldInputs";
 import { IconCross } from "../Icons/index";
-import IconBtn from "../Atoms/IconBtn.tsx";
-import GeneralBtn from "../Atoms/GeneralBtn.tsx";
+import IconBtn from "../Atoms/IconBtn";
+import GeneralBtn from "../Atoms/GeneralBtn";
 import { iBlur, iBoard, iChange, iClick, iColumn } from "../../lib/types/store";
 
 

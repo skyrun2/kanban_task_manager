@@ -3,13 +3,13 @@ import { useKanbanState } from "../../lib/store/useKanbanStore";
 import classListExt from "../../utils/classListExt";
 
 import { AddTask, DarkTheme, IconBoard, LightTheme, Show } from "../Icons/index";
-import Hide from "../Atoms/Hide.tsx";
-import GeneralBtn from "../Atoms/GeneralBtn.tsx";
+import Hide from "../Atoms/Hide";
+import GeneralBtn from "../Atoms/GeneralBtn";
 import { CreateNewBoardProps, EventListeners, iBoard, iClick, iColumn, iTask } from "../../lib/types/store";
-import NewBoardModal from "./NewBoardModal.tsx";
-import NewColumnModal from "./NewColumnModal.tsx";
-import IconBtn from "../Atoms/IconBtn.tsx";
-import TaskModal from "./TaskModal.tsx";
+import NewBoardModal from "./NewBoardModal";
+import NewColumnModal from "./NewColumnModal";
+import IconBtn from "../Atoms/IconBtn";
+import TaskModal from "./TaskModal";
 
 
 

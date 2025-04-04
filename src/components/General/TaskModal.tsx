@@ -1,16 +1,16 @@
 import { FC, useState } from "react";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
 import { EventListeners, iClick, iSubtasks } from "../../lib/types/store";
-import Field from "./Field.tsx";
+import Field from "./Field";
 
-import IconBtn from "../Atoms/IconBtn.tsx";
+import IconBtn from "../Atoms/IconBtn";
 
-import DropDown from "../Atoms/DropDown.tsx";
+import DropDown from "../Atoms/DropDown";
 
 import classListExt from "../../utils/classListExt";
 import { More } from "../Icons/index";
-import FieldCheckBox from "../Atoms/FieldCheckBox.tsx";
-import AddTaskModal from "./AddTaskModal.tsx";
+import FieldCheckBox from "../Atoms/FieldCheckBox";
+import AddTaskModal from "./AddTaskModal";
 
 
 const  TaskModal : FC = () =>{

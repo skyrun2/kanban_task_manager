@@ -1,7 +1,7 @@
 import { FC } from "react";
 import classListExt from "../../utils/classListExt";
 import { useKanbanState } from "../../lib/store/useKanbanStore";
-import GeneralBtn from "../Atoms/GeneralBtn.tsx";
+import GeneralBtn from "../Atoms/GeneralBtn";
    
 // import { iClick } from "../../lib/types/store";
 
